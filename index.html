@@ -7,14 +7,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <main id="tabuleiro-container">
-        <h1>CSI: Célula Sob Investigação</h1>
-        <div id="tabuleiro">
-            </div>
-    </main>
+    <div id="tela-menu" class="tela ativa">
+        <img src="assets/img/1.png" alt="Menu Principal" class="fundo-img">
+        
+        <button id="btn-jogar" class="hitbox hitbox-jogar"></button>
+        <button id="btn-glossario" class="hitbox hitbox-glossario"></button>
+        <button id="btn-creditos" class="hitbox hitbox-creditos"></button>
+        <button id="btn-configuracoes" class="hitbox hitbox-configuracoes"></button>
+    </div>
 
-    <div id="modal-investigacao" style="display: none;">
+    <div id="tela-tabuleiro" class="tela">
+        <img src="assets/img/Mapa_v0.01.png" alt="Tabuleiro" class="fundo-img">
+        
+        <div id="grade-tabuleiro"></div>
+        
+        <button id="btn-voltar-menu" style="position: absolute; top: 2%; left: 2%; padding: 10px; cursor: pointer;">Voltar ao Menu</button>
+
         </div>
+
+    <div id="modal-investigacao" style="display: none;"></div>
 
     <script src="js/game.js"></script>
 </body>
