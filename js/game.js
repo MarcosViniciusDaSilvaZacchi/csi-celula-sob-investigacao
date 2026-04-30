@@ -51,10 +51,68 @@ btnJogar.addEventListener('click', function() {
     // Força a criar a grade ao entrar no tabuleiro para garantir alinhamento
     criarGrade(); 
 });
+// ==========================================
+// 4. MENU IN-GAME (SISTEMA DE PAUSA)
+// ==========================================
+const menuInGame = document.getElementById('menu-in-game');
+const modalGlossario = document.getElementById('modal-glossario');
+const modalSuspeitos = document.getElementById('modal-suspeitos');
 
-btnVoltarMenu.addEventListener('click', function() {
-    telaTabuleiro.classList.remove('ativa');
-    telaMenu.classList.add('ativa');
+// Escuta as teclas digitadas em qualquer lugar do jogo
+document.addEventListener('keydown', function(event) {
+    // Só permite abrir o menu de pausa se o jogador estiver no tabuleiro
+    if (telaTabuleiro.classList.contains('ativa')) {
+        
+        // Verifica se apertou "M" ou "m"
+        if (event.key === 'm' || event.key === 'M') {
+            
+            // Se o menu já estiver aberto, ele fecha. Se estiver fechado, ele abre.
+            if (menuInGame.style.display === 'flex') {
+                menuInGame.style.display = 'none';
+            } else {
+                menuInGame.style.display = 'flex';
+                // Garante que os sub-modais fechem para não encavalar
+                modalGlossario.style.display = 'none';
+                modalSuspeitos.style.display = 'none';
+            }
+        }
+    }
+});
+
+// Ações dos botões dentro do Menu In-Game
+document.getElementById('btn-in-voltar').addEventListener('click', () => {
+    menuInGame.style.display = 'none';       // Esconde o menu
+    telaTabuleiro.classList.remove('ativa'); // Esconde o tabuleiro
+    telaMenu.classList.add('ativa');         // Volta pro menu inicial
+});
+
+document.getElementById('btn-in-glossario').addEventListener('click', () => {
+    menuInGame.style.display = 'none';       // Esconde o menu principal
+    modalGlossario.style.display = 'flex';   // Abre o Glossário
+});
+
+document.getElementById('btn-in-suspeitos').addEventListener('click', () => {
+    menuInGame.style.display = 'none';       // Esconde o menu principal
+    modalSuspeitos.style.display = 'flex';   // Abre a Lista de Suspeitos
+});
+
+// Lógica inteligente para os botões de voltar dos sub-modais
+// Lógica inteligente para os botões de fechar dos sub-modais
+const botoesFecharSubmodal = document.querySelectorAll('.fechar-submodal');
+botoesFecharSubmodal.forEach(botao => {
+    botao.addEventListener('click', (e) => {
+        // Pega qual modal este botão deve fechar pelo data-target
+        const targetId = e.target.getAttribute('data-target');
+        document.getElementById(targetId).style.display = 'none';
+        
+        // Verifica se o jogador está com o tabuleiro aberto
+        if (telaTabuleiro.classList.contains('ativa')) {
+            // Se estiver no jogo, retorna para o menu de pausa
+            menuInGame.style.display = 'flex'; 
+        }
+        // Se NÃO estiver no tabuleiro (ou seja, abriu pelo menu principal),
+        // ele não faz nada. O modal só fecha e a tela de Início já está lá atrás!
+    });
 });
 
 // ==========================================
@@ -144,23 +202,22 @@ function verificarSala(x, y) {
     }
 }
 
-function abrirModalInvestigacao(nomeDaSala) {
+function abrirModalInvestigacao(nomeDaSala, numeroPista) {
     const modal = document.getElementById('modal-investigacao');
     
     modal.innerHTML = `
         <div class="conteudo-modal">
-                <h2>🕵️‍♂️ Investigação Iniciada!</h2>
-                <p style="margin-bottom: 10px;">Você entrou no(a): <strong>${nomeDaSala}</strong></p>
+            <h2>🕵️‍♂️ Investigação Iniciada!</h2>
+            <p style="margin-bottom: 10px;">Você entrou no(a): <strong>${nomeDaSala}</strong></p>
             
-                <!-- Essa linha nova mostra o progresso do jogador na sala -->
-                <p style="margin-bottom: 30px; color: #ffeb3b; font-size: 1.2em;">
-                    📜 Revelando Pista #${numeroPista}
-                </p>
+            <p style="margin-bottom: 30px; color: #ffeb3b; font-size: 1.2em;">
+                📜 Revelando Pista #${numeroPista}
+            </p>
             
-                <p>Aqui você colocará a imagem da pista, texto ou desafio no futuro.</p>
+            <p>Aqui você colocará a imagem da pista, texto ou desafio no futuro.</p>
             
-                <button id="fechar-modal" style="padding: 10px 20px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Continuar Explorando</button>
-            </div>
+            <button id="fechar-modal" style="padding: 10px 20px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Continuar Explorando</button>
+        </div>
     `;
     
     modal.style.display = 'flex';
@@ -169,3 +226,83 @@ function abrirModalInvestigacao(nomeDaSala) {
         modal.style.display = 'none';
     });
 }
+// ==========================================
+// 5. BANCO DE DADOS DO GLOSSÁRIO
+// ==========================================
+
+// Lista exata baseada nos nomes dos seus arquivos .png
+const bancoDeArquivos = {
+    suspeitos: [
+        { id: 'S-atpMutante', nome: 'ATP Mutante' },
+        { id: 'S-celulaOrganizada', nome: 'Célula Organizada' },
+        { id: 'S-enzimaCatalizadora', nome: 'Enzima Catalizadora' },
+        { id: 'S-mitocondriaZumbi', nome: 'Mitocôndria Zumbi' },
+        { id: 'S-mitoEnergetico', nome: 'Mito Energético' },
+        { id: 'S-organoideClonado', nome: 'Organoide Clonado' },
+        { id: 'S-oxigenioExplosivo', nome: 'Oxigênio Explosivo' },
+        { id: 'S-radicalLivreSolto', nome: 'Radical Livre Solto' },
+        { id: 'S-radicalRaivoso', nome: 'Radical Raivoso' },
+        { id: 'S-rnaMutante', nome: 'RNA Mutante' }
+    ],
+    locais: [
+        { id: 'L-cadeiaTransportadoraDeEletrons', nome: 'Cadeia de Elétrons' },
+        { id: 'L-cicloDeKrebs', nome: 'Ciclo de Krebs' },
+        { id: 'L-descarboxilacaoDoPiruvato', nome: 'Descarboxilação do Piruvato' },
+        { id: 'L-fosforilacaoOxidativa', nome: 'Fosforilação Oxidativa' },
+        { id: 'L-glicolise', nome: 'Glicólise' },
+        { id: 'L-laboratorioCentral', nome: 'Laboratório Central' },
+        { id: 'L-producaoDeAcetil-coa', nome: 'Produção de Acetil-CoA' },
+        { id: 'L-reservaDeGlicose', nome: 'Reserva de Glicose' },
+        { id: 'L-setorGenetico', nome: 'Setor Genético' },
+        { id: 'L-zonaToxica', nome: 'Zona Tóxica' }
+    ]
+};
+
+// Função que constrói as listas no índice
+function inicializarGlossario() {
+    const listaSuspeitos = document.getElementById('lista-suspeitos');
+    const listaLocais = document.getElementById('lista-locais');
+
+    // Monta a lista de Suspeitos
+    bancoDeArquivos.suspeitos.forEach(item => {
+        let li = document.createElement('li');
+        li.innerText = item.nome;
+        // Ao clicar, muda a página direita
+        li.onclick = () => carregarArquivo(item.id, item.nome, 'Perfil do Suspeito');
+        listaSuspeitos.appendChild(li);
+    });
+
+    // Monta a lista de Locais
+    bancoDeArquivos.locais.forEach(item => {
+        let li = document.createElement('li');
+        li.innerText = item.nome;
+        // Ao clicar, muda a página direita
+        li.onclick = () => carregarArquivo(item.id, item.nome, 'Relatório do Local');
+        listaLocais.appendChild(li);
+    });
+}
+
+// Função que injeta a imagem na página da direita
+function carregarArquivo(id, nome, tipo) {
+    // Esconde o título de texto, já que a imagem tem o nome
+    document.getElementById('detalhe-titulo').style.display = 'none';
+    
+    const imgEl = document.getElementById('detalhe-imagem');
+    // Puxa dinamicamente a imagem usando o ID (nome do arquivo)
+    imgEl.src = `assets/img/${id}.png`; 
+    imgEl.style.display = 'block';
+
+    // Esconde a descrição de texto embaixo da imagem
+    document.getElementById('detalhe-descricao').style.display = 'none';
+}
+
+// Adiciona o clique na Hitbox do Glossário (Menu Principal)
+const hitboxGlossarioMenu = document.querySelector('.hitbox-glossario');
+if (hitboxGlossarioMenu) {
+    hitboxGlossarioMenu.addEventListener('click', () => {
+        document.getElementById('modal-glossario').style.display = 'flex';
+    });
+}
+
+// Roda a montagem do índice assim que o jogo abre
+inicializarGlossario();

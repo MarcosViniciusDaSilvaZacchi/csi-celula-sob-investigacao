@@ -21,11 +21,60 @@
         
         <div id="grade-tabuleiro"></div>
         
-        <button id="btn-voltar-menu" style="position: absolute; top: 2%; left: 2%; padding: 10px; cursor: pointer;">Voltar ao Menu</button>
 
         </div>
 
     <div id="modal-investigacao" style="display: none;"></div>
+
+    <!-- Menu In-Game (Abre com M) -->
+    <div id="menu-in-game" class="modal-oculto">
+        <div class="conteudo-menu">
+            <h2 style="color: #2196F3;">Pausa (Menu)</h2>
+            <button id="btn-in-voltar">Voltar ao Menu Principal</button>
+            <button id="btn-in-glossario">Glossário</button>
+            <button id="btn-in-suspeitos">Lista de Suspeitos</button>
+            <p style="margin-top: 15px; font-size: 0.8em; color: #888;">Pressione 'M' novamente para voltar ao jogo</p>
+        </div>
+    </div>
+
+    <!-- Modal Glossário (Estilo Pasta Confidencial) -->
+    <div id="modal-glossario" class="modal-oculto">
+        <div class="pasta-container">
+            <!-- Botão de fechar no formato de um "X" vermelho no canto da pasta -->
+            <button class="fechar-submodal btn-fechar-pasta" data-target="modal-glossario">X</button>
+            
+            <!-- Página Esquerda: Índice de Arquivos -->
+            <div class="pagina-esquerda">
+                
+                <h3 style="margin-top: 15px; color: #8b0000;">👥 Suspeitos</h3>
+                <ul id="lista-suspeitos" class="lista-glossario"></ul>
+
+                <h3 style="margin-top: 20px; color: #00008b;">📍 Locais da Célula</h3>
+                <ul id="lista-locais" class="lista-glossario"></ul>
+            </div>
+
+            <!-- Página Direita: Visualização do Arquivo -->
+            <div class="pagina-direita">
+                <h2 id="detalhe-titulo">Selecione um arquivo</h2>
+                <div id="detalhe-imagem-container">
+                    <!-- A imagem do local/suspeito será injetada aqui -->
+                    <img id="detalhe-imagem" src="" alt="Imagem do Arquivo" style="display: none;">
+                </div>
+                <p id="detalhe-descricao" style="margin-top: 15px;">
+                    Aguardando seleção de arquivo do banco de dados...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Suspeitos -->
+    <div id="modal-suspeitos" class="modal-oculto">
+        <div class="conteudo-modal">
+            <h2>👥 Checklist de Suspeitos</h2>
+            <p>Aqui ficarão as caixinhas de check dos suspeitos.</p>
+            <button class="fechar-submodal" data-target="modal-suspeitos">Voltar ao Menu</button>
+        </div>
+    </div>
 
     <script src="js/game.js"></script>
 </body>
