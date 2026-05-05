@@ -306,3 +306,102 @@ if (hitboxGlossarioMenu) {
 
 // Roda a montagem do índice assim que o jogo abre
 inicializarGlossario();
+
+// ==========================================
+// 6. SISTEMA DE BLOCO DE ANOTAÇÕES (CHECKLIST)
+// ==========================================
+
+// Todos os textos extraídos exatamente da sua imagem
+const dadosBloco = [
+    {
+        titulo: "SUSPEITOS",
+        itens: [
+            "Célula Organizada", "Enzima Congelada", "Oxigênio Explosivo", 
+            "ATP Mutante", "Mitocôndria Zumbi", "Mito Energético", 
+            "Radical Raivoso", "Organoide Clonado", "Radical Livre Solto", "RNA Mutante"
+        ]
+    },
+    {
+        titulo: "LOCAIS",
+        itens: [
+            "Reserva de glicose", "Glicólise", "Descarboxilação do Piruvato", 
+            "Produção de Acetil-CoA", "Ciclo de Krebs", "Cadeia transportadora", 
+            "Fosforilação Oxidativa", "Zona Tóxica", "Setor Genético", "Laboratório Central"
+        ]
+    },
+    {
+        titulo: "PROBLEMAS",
+        itens: [
+            "Consome oxigênio sem gerar ATP", "Acúmulo de radicais danificou as enzimas", 
+            "ATP defeituoso inutilizável", "Falha na formação de acetil-coa", 
+            "Incapacidade de mobilizar energia", "Falta de insumos para funcionar", 
+            "Mutação destruiu DNA mitocondrial", "Produção de proteínas defeituosas", 
+            "Excesso de oxigênio causou estresse oxidativo", "Desvio do processo por estrutura falsa", 
+            "Danos às membranas mitocondriais", "Proteínas mitocondriais defeituosas"
+        ]
+    }
+];
+
+function montarBlocoAnotacoes() {
+    const conteinerBloco = document.getElementById('bloco-conteudo');
+    
+    dadosBloco.forEach(secao => {
+        const divSecao = document.createElement('div');
+        divSecao.classList.add('secao-bloco');
+
+        const tituloSecao = document.createElement('div');
+        tituloSecao.classList.add('secao-titulo');
+        tituloSecao.innerText = secao.titulo;
+
+        const divLista = document.createElement('div');
+        divLista.classList.add('secao-lista');
+
+        secao.itens.forEach(texto => {
+            const linha = document.createElement('div');
+            linha.classList.add('linha-item');
+            
+            const spanTexto = document.createElement('span');
+            spanTexto.innerText = texto;
+
+            // Container para alinhar a bolinha na direita
+            const bolinhas = document.createElement('div');
+            bolinhas.classList.add('container-bolinhas');
+            
+            // Cria a bolinha interativa
+            const bolinha = document.createElement('div');
+            bolinha.classList.add('bolinha-status', 'vazio'); // Começa vazia
+            bolinha.dataset.estado = '0'; // 0=Vazio, 1=V, 2=X, 3=?
+
+            // A MÁGICA: O que acontece quando clica na bolinha
+            bolinha.addEventListener('click', function() {
+                // Lê o estado atual e soma 1. O "% 4" faz ele voltar pro 0 depois do 3!
+                let proximoEstado = (parseInt(this.dataset.estado) + 1) % 4;
+                this.dataset.estado = proximoEstado;
+
+                // Limpa todas as cores
+                this.classList.remove('vazio', 'certo', 'errado', 'duvida');
+
+                // Aplica a nova cor e símbolo
+                if (proximoEstado === 0) this.classList.add('vazio');
+                else if (proximoEstado === 1) this.classList.add('certo');
+                else if (proximoEstado === 2) this.classList.add('errado');
+                else if (proximoEstado === 3) this.classList.add('duvida');
+            });
+
+            // Adiciona a bolinha na linha, e a linha na lista
+            bolinhas.appendChild(bolinha);
+            linha.appendChild(spanTexto);
+            linha.appendChild(bolinhas);
+            
+            divLista.appendChild(linha);
+        });
+
+        // Junta tudo
+        divSecao.appendChild(tituloSecao);
+        divSecao.appendChild(divLista);
+        conteinerBloco.appendChild(divSecao);
+    });
+}
+
+// Inicia a montagem assim que o jogo carrega
+montarBlocoAnotacoes();

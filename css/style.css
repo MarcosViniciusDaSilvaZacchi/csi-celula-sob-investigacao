@@ -281,3 +281,153 @@ body {
 .pagina-esquerda::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.6); /* Fica mais escuro ao passar o mouse */
 }
+
+/* ==========================================
+   BLOCO DE ANOTAÇÕES (CHECKLIST)
+   ========================================== */
+.bloco-anotacoes {
+    background-color: #d8c3a5; /* Cor de papel craft / papel reciclado */
+    width: 90vw;
+    max-width: 550px; /* Mantém o formato estreito e comprido da sua imagem */
+    height: 95vh;
+    max-height: 850px;
+    border-radius: 8px;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-family: 'Courier New', Courier, monospace; /* Fonte estilo máquina de escrever */
+    color: #2c2c2c;
+}
+
+.bloco-cabecalho {
+    background-color: #e0f7fa; /* Azul clarinho do topo da imagem */
+    text-align: center;
+    padding: 15px 20px 10px;
+    border-bottom: 3px solid #333;
+    position: relative;
+    border-radius: 8px 8px 0 0;
+}
+
+.bloco-cabecalho h2 {
+    margin: 10px 0 0 0;
+    font-size: 2em;
+    letter-spacing: 2px;
+}
+
+.btn-fechar-bloco {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.bloco-conteudo {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Container de cada Seção (Suspeitos, Locais, Problemas) */
+.secao-bloco {
+    display: flex;
+    border-bottom: 3px solid #333;
+}
+
+/* Título lateral virado de lado */
+.secao-titulo {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px;
+    border-right: 2px solid #333;
+    background-color: rgba(0,0,0,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Lista de itens com linhas pontilhadas */
+.secao-lista {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.linha-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 15px;
+    border-bottom: 2px dashed rgba(0,0,0,0.3); /* Linha tracejada da sua imagem */
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.linha-item:last-child {
+    border-bottom: none;
+}
+
+/* Onde ficam as duas bolinhas brancas */
+.container-bolinhas {
+    display: flex;
+    gap: 8px; /* Espaço entre as bolinhas */
+}
+
+/* Estilo das caixas de seleção virando as bolinhas da imagem */
+/* BOLINHAS DE ESTADO (✔, ✖, ?) */
+.bolinha-status {
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border: 2px solid #aaa;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    user-select: none; /* Previne que o texto do bloco seja selecionado ao clicar rápido */
+    transition: all 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Estado 0: Branco (Vazio) */
+.bolinha-status.vazio {
+    background-color: white;
+    color: transparent;
+}
+
+/* Estado 1: Marcado (Verde) */
+.bolinha-status.certo {
+    background-color: #4CAF50;
+    border-color: #2e7d32;
+    color: white;
+}
+.bolinha-status.certo::after { content: '✔'; }
+
+/* Estado 2: Eliminado (Vermelho) */
+.bolinha-status.errado {
+    background-color: #f44336;
+    border-color: #c62828;
+    color: white;
+}
+.bolinha-status.errado::after { content: '✖'; }
+
+/* Estado 3: Dúvida (Amarelo/Laranja) */
+.bolinha-status.duvida {
+    background-color: #ff9800;
+    border-color: #ef6c00;
+    color: white;
+}
+.bolinha-status.duvida::after { content: '?'; }

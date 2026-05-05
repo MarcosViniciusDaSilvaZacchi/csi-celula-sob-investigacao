@@ -67,12 +67,20 @@
         </div>
     </div>
 
-    <!-- Modal Suspeitos -->
+    <!-- Modal Suspeitos (Bloco de Anotações) -->
     <div id="modal-suspeitos" class="modal-oculto">
-        <div class="conteudo-modal">
-            <h2>👥 Checklist de Suspeitos</h2>
-            <p>Aqui ficarão as caixinhas de check dos suspeitos.</p>
-            <button class="fechar-submodal" data-target="modal-suspeitos">Voltar ao Menu</button>
+        <div class="bloco-anotacoes">
+            
+            <div class="bloco-cabecalho">
+                <!-- Bolinhas simulando o espiral do caderno -->
+                <div class="espiral"></div>
+                <h2>BLOCO DE ANOTAÇÕES</h2>
+                <button class="fechar-submodal btn-fechar-bloco" data-target="modal-suspeitos">X</button>
+            </div>
+
+            <!-- O conteúdo da lista será injetado aqui pelo JavaScript -->
+            <div id="bloco-conteudo" class="bloco-conteudo"></div>
+            
         </div>
     </div>
 
