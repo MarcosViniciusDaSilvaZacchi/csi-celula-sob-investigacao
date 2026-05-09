@@ -372,7 +372,7 @@ function montarBlocoAnotacoes() {
             bolinha.classList.add('bolinha-status', 'vazio'); // Começa vazia
             bolinha.dataset.estado = '0'; // 0=Vazio, 1=V, 2=X, 3=?
 
-            // A MÁGICA: O que acontece quando clica na bolinha
+            //quando clica na bolinha
             bolinha.addEventListener('click', function() {
                 // Lê o estado atual e soma 1. O "% 4" faz ele voltar pro 0 depois do 3!
                 let proximoEstado = (parseInt(this.dataset.estado) + 1) % 4;

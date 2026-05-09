@@ -121,14 +121,14 @@ body {
     margin-bottom: 20px;
 }
 
-/* Cor para as áreas de sala (modo Debug) */
+/* Cor para as áreas de sala (modo Debug) 
+retirar ao final do projeto*/
 .area-sala {
     background-color: rgba(255, 0, 0, 0.4); /* Vermelho translúcido */
-    /* Você pode colocar um pontilhado nas bordas se quiser ver melhor o limite */
-    /* border: 1px dashed rgba(255,0,0,0.8); */ 
 }
 
-/* Garante que o jogador fique verde, por cima de tudo */
+/* Garante que o jogador fique verde, por cima de tudo
+sera alterado pela animacao */
 .jogador {
     background-color: #00ff00 !important; /* O !important força a cor verde */
     border-radius: 50%;
@@ -192,7 +192,7 @@ body {
     margin-top: 20px;
 }
 /* ==========================================
-   GLOSSÁRIO (ESTILO PASTA CONFIDENCIAL)
+   GLOSSÁRIO
    ========================================== */
 .pasta-container {
     position: relative;
@@ -237,7 +237,7 @@ body {
 }
 
 .lista-glossario li {
-    width: 100%; /* O botão também estica até o limite */
+    width: 100%; /* O botão estica até o limite */
     box-sizing: border-box;
     padding: 10px 12px;
     margin-bottom: 5px;
@@ -266,7 +266,7 @@ body {
 }
 
 /* ==========================================
-   BÔNUS: SCROLLBAR CUSTOMIZADO ESTILO JOGO
+   SCROLLBAR CUSTOMIZADO ESTILO JOGO
    ========================================== */
 .pagina-esquerda::-webkit-scrollbar {
     width: 8px; /* Deixa o scroll fininho */
