@@ -38,18 +38,19 @@ let progressoPistas = {
     "Setor de Produção": 1
 };
 // ==========================================
-// 2. GERENCIAMENTO DE TELAS (MENU / TABULEIRO)
+// 2. GERENCIAMENTO DE TELAS (MENU / SETUP / TABULEIRO)
 // ==========================================
 const btnJogar = document.getElementById('btn-jogar');
 const telaMenu = document.getElementById('tela-menu');
 const telaTabuleiro = document.getElementById('tela-tabuleiro');
-const btnVoltarMenu = document.getElementById('btn-voltar-menu');
+const telaSetup = document.getElementById('tela-setup'); // <-- Adicionamos a referência ao Setup aqui!
 
 btnJogar.addEventListener('click', function() {
-    telaMenu.classList.remove('ativa');
-    telaTabuleiro.classList.add('ativa');
-    // Força a criar a grade ao entrar no tabuleiro para garantir alinhamento
-    criarGrade(); 
+    telaMenu.classList.remove('ativa'); // Desativa o menu principal
+    telaMenu.style.display = 'none';    // Esconde o menu principal
+    
+    // Abre a tela de Setup em vez do Tabuleiro!
+    telaSetup.style.display = 'flex';   
 });
 // ==========================================
 // 4. MENU IN-GAME (SISTEMA DE PAUSA)
@@ -152,15 +153,25 @@ function criarGrade() {
 }
 
 function moverJogador(novoX, novoY) {
-    // Math.abs calcula a diferença absoluta (sempre positivo)
-    // Se a soma da diferença X e Y for 1, significa que moveu só 1 casa (cima, baixo, lado)
+    // Se não tiver passos, significa que não rolou o dado ainda
+    if (passosDisponiveis === 0) return; 
+
     const dist = Math.abs(novoX - jogadorPos.x) + Math.abs(novoY - jogadorPos.y);
     
-    // Apenas permite andar 1 quadrado por vez (para proibir andar na diagonal, coloque "dist === 1")
-    // Se quiser que o jogador ande solto para testar mais rápido, troque por "dist > 0"
-    if (dist === 1) { 
+    // Se o lugar onde ele clicou estiver dentro do limite permitido pelo dado...
+    if (dist > 0 && dist <= passosDisponiveis) {
+        
+        // TELEPORTE! O jogador vai direto pro destino.
         jogadorPos = { x: novoX, y: novoY };
-        criarGrade(); // Redesenha a grade com o jogador na nova posição
+        
+        // Zera tudo: ele perde o resto dos pontos e o dado reseta
+        passosDisponiveis = 0; 
+        document.getElementById('dado-resultado').innerText = '-';
+
+        // Redesenha o tabuleiro (o que apaga as cores mágicas automaticamente)
+        criarGrade(); 
+        
+        // Checa se ele caiu em uma sala nova
         verificarSala(novoX, novoY);
     }
 }
@@ -405,3 +416,141 @@ function montarBlocoAnotacoes() {
 
 // Inicia a montagem assim que o jogo carrega
 montarBlocoAnotacoes();
+
+// Novas variáveis de estado
+let jogadores = [];
+let turnoAtual = 0;
+
+function proximoPassoSetup(passo) {
+    document.getElementById('setup-passo-1').style.display = 'none';
+    document.getElementById('setup-passo-2').style.display = 'block';
+}
+
+function configurarJogadores(qtd) {
+    const container = document.getElementById('campos-nomes');
+    container.innerHTML = '';
+    jogadores = [];
+
+    for (let i = 1; i <= qtd; i++) {
+        container.innerHTML += `
+            <input type="text" id="nome-p${i}" class="input-nome" placeholder="Nome do Detetive ${i}">
+        `;
+    }
+    document.getElementById('btn-iniciar-jogo').style.display = 'inline-block';
+}
+
+function iniciarPartidaComp() {
+    const inputs = document.querySelectorAll('.input-nome');
+    inputs.forEach((input, index) => {
+        jogadores.push({
+            id: index,
+            nome: input.value || `Detetive ${index + 1}`,
+            pos: { x: 23, y: 9 }, // Todos começam no Centro
+            cor: index === 0 ? '#00ff00' : (index === 1 ? '#0000ff' : '#ff0000'),
+            pistasEncontradas: 0
+        });
+    });
+
+    document.getElementById('tela-setup').style.display = 'none';
+    document.getElementById('tela-tabuleiro').classList.add('ativa');
+    
+    // Salva o início da partida no "Banco de Dados" local
+    localStorage.setItem('csi_partida_ativa', JSON.stringify(jogadores));
+    
+    criarGrade();
+}
+
+// Sugestão para o Ranking (Banco de Dados Local)
+function salvarNoRanking(vencedor, turnos) {
+    let ranking = JSON.parse(localStorage.getItem('csi_ranking')) || [];
+    ranking.push({
+        nome: vencedor,
+        pontuacao: turnos,
+        data: new Date().toLocaleDateString()
+    });
+    // Ordena por menor número de turnos (mais rápido)
+    ranking.sort((a, b) => a.pontuacao - b.pontuacao);
+    localStorage.setItem('csi_ranking', JSON.stringify(ranking.slice(0, 10))); // Top 10
+}
+
+// ==========================================
+// 7. SISTEMA DE DADO D12 E MOVIMENTAÇÃO TÁTICA
+// ==========================================
+let passosDisponiveis = 0;
+
+// Lógica de Rolar o Dado
+document.getElementById('btn-rolar-dado').addEventListener('click', () => {
+    // Se o jogador já rolou e ainda não andou, não deixa rolar de novo
+    if (passosDisponiveis > 0) return; 
+
+    // Sorteia de 1 a 12
+    const resultado = Math.floor(Math.random() * 12) + 1; 
+    document.getElementById('dado-resultado').innerText = resultado;
+    passosDisponiveis = resultado;
+
+    destacarCasasAlcancaveis();
+});
+
+function destacarCasasAlcancaveis() {
+    // Pega todas as células que existem atualmente na grade
+    const celulas = document.querySelectorAll('.celula');
+    
+    celulas.forEach(c => {
+        const x = parseInt(c.dataset.x);
+        const y = parseInt(c.dataset.y);
+
+        // Distância de Manhattan (perfeita para andar em quadrados de xadrez/RPG)
+        const dist = Math.abs(x - jogadorPos.x) + Math.abs(y - jogadorPos.y);
+
+        // Se a casa estiver dentro do raio do dado e não for a própria casa onde ele está:
+        if (dist > 0 && dist <= passosDisponiveis) {
+            
+            // Verifica se este quadrado específico pertence a alguma sala
+            let ehSala = false;
+            for (const [nomeDaSala, limites] of Object.entries(salas)) {
+                if (x >= limites.minX && x <= limites.maxX &&
+                    y >= limites.minY && y <= limites.maxY) {
+                    ehSala = true;
+                    break;
+                }
+            }
+
+            // Pinta com a cor certa
+            if (ehSala) {
+                c.classList.add('alcancavel-sala'); // Fica Laranja
+            } else {
+                c.classList.add('alcancavel');      // Fica Verde
+            }
+        }
+    });
+}
+
+// Lógica de Arrastar e Soltar (Drag and Drop) o Dado
+const dadoFlutuante = document.getElementById('dado-flutuante');
+const dadoHeader = document.getElementById('dado-header');
+
+let isDragging = false;
+let dragOffsetX, dragOffsetY;
+
+dadoHeader.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    // Calcula a diferença entre onde o mouse clicou e o canto da caixa
+    dragOffsetX = e.clientX - dadoFlutuante.getBoundingClientRect().left;
+    dragOffsetY = e.clientY - dadoFlutuante.getBoundingClientRect().top;
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    
+    // Desliga as posições fixas de bottom/right para usarmos top/left pelo mouse
+    dadoFlutuante.style.bottom = 'auto'; 
+    dadoFlutuante.style.right = 'auto';
+    
+    // Segue o mouse
+    dadoFlutuante.style.left = `${e.clientX - dragOffsetX}px`;
+    dadoFlutuante.style.top = `${e.clientY - dragOffsetY}px`;
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false; // Solta a caixa
+});

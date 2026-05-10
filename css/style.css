@@ -154,115 +154,157 @@ sera alterado pela animacao */
 }
 
 /* Estilo específico para a caixa do menu In-Game */
+/* Estilo específico para a caixa do menu In-Game (Tema Pasta de Investigação) */
 .conteudo-menu {
-    background-color: #2c2c2c;
-    border: 2px solid #2196F3; /* Borda azul para diferenciar das pistas */
-    border-radius: 10px;
+    background-color: #d8c3a5; /* Cor de papel craft */
+    border: 3px solid #333; /* Borda forte estilo tinta */
+    border-radius: 5px;
     padding: 40px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espaço entre os botões */
-    min-width: 300px;
+    gap: 15px;
+    min-width: 350px;
+    font-family: 'Courier New', Courier, monospace; /* Fonte máquina de escrever */
+    color: #2c2c2c;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+}
+
+.conteudo-menu h2 {
+    color: #8b0000; /* Tinta vermelha de carimbo */
+    border-bottom: 2px dashed #333;
+    padding-bottom: 15px;
+    margin-top: 0;
+    letter-spacing: 3px;
+    font-weight: bold;
 }
 
 .conteudo-menu button {
     padding: 15px;
     font-size: 1.1em;
     cursor: pointer;
-    background-color: #333;
-    color: white;
-    border: 1px solid #2196F3;
-    border-radius: 5px;
-    transition: 0.2s; /* Animação suave */
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    transition: all 0.2s;
 }
 
 .conteudo-menu button:hover {
-    background-color: #2196F3;
+    background-color: #333;
+    color: #d8c3a5; /* Inverte a cor, parecendo um carimbo preenchido */
+    transform: scale(1.02); /* Dá uma leve crescida ao passar o mouse */
 }
 
-/* Os botões de fechar dos sub-modais usam o estilo antigo do modal */
-.fechar-submodal {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
+.conteudo-menu p {
+    font-weight: bold;
+    color: #555; /* Cinza escuro para imitar lápis/tinta desbotada no rodapé */
 }
 /* ==========================================
-   GLOSSÁRIO
+   GLOSSÁRIO (ESTILO PASTA CONFIDENCIAL)
    ========================================== */
+/* 1. CONTAINER TRANSPARENTE */
 .pasta-container {
     position: relative;
-    width: 98vw;  
+    width: 98vw;
     height: 98vh;
-    max-width: 1800px; 
+    max-width: 1800px;
     max-height: 1000px;
     
-    background-image: url('../assets/img/pasta.png'); 
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: transparent; /* ZERAMOS O FUNDO AQUI! */
+    box-shadow: none; /* Tiramos a sombra do container invisível */
     
     display: flex;
-    /* Reduzi drasticamente o último número (que é a margem esquerda) */
+    gap: 30px; /* Adiciona um espaço bonito entre o painel esquerdo e a imagem direita */
     padding: 3% 4% 3% 1.5%; 
     box-sizing: border-box;
 }
 
+/* O botão de fechar (X) estilo carimbo */
+.btn-fechar-pasta {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: #d8c3a5 !important; 
+    color: #8b0000 !important; 
+    border: 2px solid #333 !important; 
+    border-radius: 50% !important;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    font-family: 'Courier New', Courier, monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-fechar-pasta:hover {
+    background-color: #8b0000 !important; 
+    color: #d8c3a5 !important;
+}
+
+/* 2. PROPORÇÕES RESTAURADAS E FONTES */
 .pagina-esquerda {
-    flex: 0.25; /* Exatamente 1/3 da pasta */
-    /* Zerei o padding da esquerda (o 0px ali no final) para o botão colar no canto */
-    padding: 10px 15px 20px 0px; 
+    flex: 0.33; /* Volta a ocupar apenas 1/3 da tela */
+    padding: 10px 15px 20px 20px; 
     overflow-y: auto; 
     color: #2c2c2c;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .pagina-direita {
-    flex: 0.75; /* 2/3 da pasta para a imagem ficar gigante */
+    flex: 0.67; /* Volta a ocupar 2/3 para a imagem gigante */
     padding: 10px;
     display: flex;
     justify-content: center; 
     align-items: center;
 }
 
-/* 3. ESTICA OS BOTÕES DO ÍNDICE E MATA O ESPAÇO VAZIO */
+/* 3. ÍNDICE COM FUNDO SÓLIDO (RECORTES DE PAPEL) */
 .lista-glossario {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    width: 100%; /* Força a lista a preencher tudo */
+    width: 100%;
 }
 
 .lista-glossario li {
-    width: 100%; /* O botão estica até o limite */
+    width: 100%;
     box-sizing: border-box;
-    padding: 10px 12px;
-    margin-bottom: 5px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background-color: #e8dcc7; /* Papel um pouco mais claro para destacar a leitura */
+    border: 2px solid #333; /* Borda forte imitando caneta/recorte */
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s;
+    color: #333;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.2); /* Sombreado duro estilo jogo antigo */
 }
 
 .lista-glossario li:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-    transform: translateX(5px);
-    border-color: #333;
+    background-color: #333; 
+    color: #d8c3a5; 
+    transform: translateX(5px) translateY(-2px); /* Pula pra frente e pra cima */
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.4);
 }
 
 #detalhe-imagem {
     width: 100%;
     height: 100%; 
-    max-height: 85vh; /* Limite de altura mais permissivo */
+    max-height: 85vh; 
     object-fit: contain; 
     margin: 0;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    border-radius: 2px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
 }
 
 /* ==========================================
@@ -431,3 +473,142 @@ sera alterado pela animacao */
     color: white;
 }
 .bolinha-status.duvida::after { content: '?'; }
+
+#tela-setup {
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 300;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-setup {
+    background-color: #2c2c2c;
+    border: 3px solid #4CAF50;
+    padding: 40px;
+    border-radius: 15px;
+    width: 500px;
+    text-align: center;
+    color: white;
+}
+
+.setup-conteudo h2 { color: #4CAF50; margin-bottom: 20px; }
+.texto-instrucoes { text-align: left; margin-bottom: 30px; line-height: 1.6; }
+
+.selecao-qtd button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.input-nome {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+    background: #1a1a1a;
+    border: 1px solid #4CAF50;
+    color: white;
+}
+
+.btn-proximo {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ==========================================
+   D12 FLUTUANTE (DRAGGABLE) - TEMA PASTA CSI
+   ========================================== */
+#dado-flutuante {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 140px;
+    background-color: #d8c3a5; /* Cor de papel craft / pasta do jogo */
+    border: 3px solid #333; /* Borda escura imitando traço forte de caneta */
+    border-radius: 8px;
+    z-index: 400;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    color: #2c2c2c;
+    text-align: center;
+    user-select: none;
+    font-family: 'Courier New', Courier, monospace; /* Fonte de máquina de escrever do glossário */
+}
+
+#dado-header {
+    background-color: #333; /* Imita uma fita escura colada no topo */
+    color: #d8c3a5; /* Texto na cor do papel */
+    padding: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: grab;
+    border-radius: 4px 4px 0 0;
+    letter-spacing: 1px;
+}
+
+#dado-header:active {
+    cursor: grabbing;
+}
+
+.dado-conteudo {
+    padding: 15px 10px;
+}
+
+#dado-resultado {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #8b0000; /* Vermelho escuro, imitando tinta de carimbo "CONFIDENCIAL" */
+    text-shadow: none; /* Removendo o brilho digital que tinha antes */
+}
+
+#btn-rolar-dado {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent; /* Fundo transparente para mostrar a cor de papel */
+    color: #333;
+    border: 2px dashed #333; /* Borda tracejada imitando selo/recorte */
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.2s;
+}
+
+#btn-rolar-dado:hover { 
+    background-color: #333; 
+    color: #d8c3a5; /* Inverte as cores como um efeito de carimbo ao passar o mouse */
+    border-style: solid;
+}
+/* ==========================================
+   EFEITOS DE MOVIMENTAÇÃO (HIGHLIGHTS)
+   ========================================== */
+/* Chão normal alcançável (Verde Translúcido) */
+.celula.alcancavel {
+    background-color: rgba(76, 175, 80, 0.4); 
+    cursor: pointer;
+    border: 1px solid rgba(76, 175, 80, 0.8);
+    box-sizing: border-box;
+}
+
+.celula.alcancavel:hover { background-color: rgba(76, 175, 80, 0.7); }
+
+/* Sala alcançável (Laranja/Amarelo) */
+.celula.alcancavel-sala {
+    background-color: rgba(255, 152, 0, 0.5); 
+    cursor: pointer;
+    border: 2px solid #ff9800;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 10px rgba(255, 152, 0, 0.5);
+}
+
+.celula.alcancavel-sala:hover { background-color: rgba(255, 152, 0, 0.8); }

@@ -26,14 +26,40 @@
 
     <div id="modal-investigacao" style="display: none;"></div>
 
+    <div id="tela-setup" class="tela">
+    <div class="container-setup">
+        <div id="setup-passo-1" class="setup-conteudo">
+            <h2>📜 Briefing da Missão</h2>
+            <div class="texto-instrucoes">
+                <p>1. Explore as organelas da célula para coletar pistas.</p>
+                <p>2. Cada sala pode conter informações cruciais sobre o culpado.</p>
+                <p>3. Use o Bloco de Anotações (M) para eliminar suspeitos.</p>
+                <p>4. O primeiro a identificar o Problema, o Local e o Suspeito vence.</p>
+            </div>
+            <button onclick="proximoPassoSetup(2)" class="btn-proximo">Próximo</button>
+        </div>
+
+        <div id="setup-passo-2" class="setup-conteudo" style="display: none;">
+            <h2>👥 Equipe de Investigação</h2>
+            <p>Quantos detetives participarão?</p>
+            <div class="selecao-qtd">
+                <button onclick="configurarJogadores(2)">2 Jogadores</button>
+                <button onclick="configurarJogadores(3)">3 Jogadores</button>
+            </div>
+            <div id="campos-nomes" style="margin-top: 20px;"></div>
+            <button id="btn-iniciar-jogo" style="display: none;" onclick="iniciarPartidaComp()" class="btn-proximo">Iniciar Investigação</button>
+        </div>
+    </div>
+</div>
+
     <!-- Menu In-Game (Abre com M) -->
     <div id="menu-in-game" class="modal-oculto">
         <div class="conteudo-menu">
-            <h2 style="color: #2196F3;">Pausa (Menu)</h2>
+            <h2>PAUSA_</h2>
             <button id="btn-in-voltar">Voltar ao Menu Principal</button>
             <button id="btn-in-glossario">Glossário</button>
             <button id="btn-in-suspeitos">Lista de Suspeitos</button>
-            <p style="margin-top: 15px; font-size: 0.8em; color: #888;">Pressione 'M' novamente para voltar ao jogo</p>
+            <p style="margin-top: 15px; font-size: 0.8em;">Pressione 'M' novamente para voltar ao jogo</p>
         </div>
     </div>
 
@@ -81,6 +107,14 @@
             <!-- O conteúdo da lista será injetado aqui pelo JavaScript -->
             <div id="bloco-conteudo" class="bloco-conteudo"></div>
             
+        </div>
+    </div>
+
+    <div id="dado-flutuante">
+        <div id="dado-header">🎲 Arraste</div>
+        <div class="dado-conteudo">
+            <div id="dado-resultado">-</div>
+            <button id="btn-rolar-dado">Rolar D12</button>
         </div>
     </div>
 
