@@ -85,6 +85,7 @@ document.getElementById('btn-in-voltar').addEventListener('click', () => {
     menuInGame.style.display = 'none';       // Esconde o menu
     telaTabuleiro.classList.remove('ativa'); // Esconde o tabuleiro
     telaMenu.classList.add('ativa');         // Volta pro menu inicial
+    document.getElementById('dado-flutuante').style.display = 'none';
 });
 
 document.getElementById('btn-in-glossario').addEventListener('click', () => {
@@ -453,6 +454,7 @@ function iniciarPartidaComp() {
 
     document.getElementById('tela-setup').style.display = 'none';
     document.getElementById('tela-tabuleiro').classList.add('ativa');
+    document.getElementById('dado-flutuante').style.display = 'block';
     
     // Salva o início da partida no "Banco de Dados" local
     localStorage.setItem('csi_partida_ativa', JSON.stringify(jogadores));

@@ -528,6 +528,7 @@ sera alterado pela animacao */
    D12 FLUTUANTE (DRAGGABLE) - TEMA PASTA CSI
    ========================================== */
 #dado-flutuante {
+    display: none;
     position: fixed;
     bottom: 30px;
     right: 30px;
