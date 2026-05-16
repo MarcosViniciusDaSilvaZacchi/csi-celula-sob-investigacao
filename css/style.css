@@ -30,50 +30,29 @@ body {
     object-fit: fill; /* Isso garante que a imagem preencha o container exatamente */
     display: block;
 }
+
 /* Configuração base de todas as hitboxes */
 .hitbox {
     position: absolute;
-    background-color: rgba(255, 0, 0, 0.4); /* Vermelho transparente para você ver e ajustar */
+    background-color: rgba(255, 0, 0, 0.4); /* Vermelho transparente. Troque para transparent no final do projeto */
     border: none;
     cursor: pointer;
-    left: 5%; /* Todos começam com a mesma distância da borda esquerda */
+    left: 5%; 
 }
 
 /* Posições individuais estimadas */
-.hitbox-jogar {
-    top: 25%;
-    width: 18%;
-    height: 10%;
-}
-
-.hitbox-glossario {
-    top: 38%;
-    width: 29%;
-    height: 10%;
-}
-
-.hitbox-creditos {
-    top: 51%;
-    width: 26%;
-    height: 10%;
-}
-
-.hitbox-configuracoes {
-    top: 65%;
-    width: 41%;
-    height: 10%;
-}
+.hitbox-jogar { top: 25%; width: 18%; height: 10%; }
+.hitbox-glossario { top: 38%; width: 29%; height: 10%; }
+.hitbox-creditos { top: 51%; width: 26%; height: 10%; }
+.hitbox-configuracoes { top: 65%; width: 41%; height: 10%; }
 
 #grade-tabuleiro {
     position: absolute;
     top: 0;
     left: 0;
-    
     width: 98.7vw;
     height: 100vh;
-    
     display: grid;
-    
     grid-template-columns: repeat(47, 1fr);
     grid-template-rows: repeat(20, 1fr);
     z-index: 5;
@@ -84,25 +63,31 @@ body {
     box-sizing: border-box;
 }
 
+/* Cor para as áreas de sala (modo Debug - retirar ao final do projeto) */
+.area-sala {
+    background-color: rgba(255, 0, 0, 0.4); 
+}
+
 /* Estilo visual para o pino do jogador */
 .jogador {
-    background-color: #cc00ff;
+    background-color: #00ff00 !important; 
     border-radius: 50%;
-    box-shadow: 0 0 10px #ea00ff;
-    margin: 15%; /* Margem para o pino não encostar nas bordas do quadrado */
+    box-shadow: 0 0 10px #00ff00;
+    margin: 15%; 
+    position: relative;
+    z-index: 10; 
 }
-/* Estilo do Modal de Investigação (Tela de Pistas) */
+
+/* Estilo do Modal Rápido de Investigação */
 #modal-investigacao {
-    position: fixed; /* Fica travado na tela toda */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.85); /* Fundo escuro transparente */
-    z-index: 100; /* Fica por cima de TUDO */
-    
-    /* Centraliza o conteúdo dentro dele */
-    display: none; /* Começa escondido */
+    background-color: rgba(0, 0, 0, 0.85); 
+    z-index: 100; 
+    display: none; 
     justify-content: center;
     align-items: center;
 }
@@ -121,22 +106,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Cor para as áreas de sala (modo Debug) 
-retirar ao final do projeto*/
-.area-sala {
-    background-color: rgba(255, 0, 0, 0.4); /* Vermelho translúcido */
-}
-
-/* Garante que o jogador fique verde, por cima de tudo
-sera alterado pela animacao */
-.jogador {
-    background-color: #00ff00 !important; /* O !important força a cor verde */
-    border-radius: 50%;
-    box-shadow: 0 0 10px #00ff00;
-    margin: 15%; 
-    position: relative;
-    z-index: 10; /* Garante que ele fique acima do fundo vermelho */
-}
 /* ==========================================
    SISTEMA DE MENUS E POP-UPS
    ========================================== */
@@ -147,17 +116,16 @@ sera alterado pela animacao */
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.85);
-    z-index: 200; /* Bem alto para ficar na frente de tudo */
-    display: none; /* Escondido por padrão */
+    z-index: 200; 
+    display: none; 
     justify-content: center;
     align-items: center;
 }
 
-/* Estilo específico para a caixa do menu In-Game */
 /* Estilo específico para a caixa do menu In-Game (Tema Pasta de Investigação) */
 .conteudo-menu {
-    background-color: #d8c3a5; /* Cor de papel craft */
-    border: 3px solid #333; /* Borda forte estilo tinta */
+    background-color: #d8c3a5; 
+    border: 3px solid #333; 
     border-radius: 5px;
     padding: 40px;
     text-align: center;
@@ -165,13 +133,13 @@ sera alterado pela animacao */
     flex-direction: column;
     gap: 15px;
     min-width: 350px;
-    font-family: 'Courier New', Courier, monospace; /* Fonte máquina de escrever */
+    font-family: 'Courier New', Courier, monospace; 
     color: #2c2c2c;
     box-shadow: 0 15px 30px rgba(0,0,0,0.8);
 }
 
 .conteudo-menu h2 {
-    color: #8b0000; /* Tinta vermelha de carimbo */
+    color: #8b0000; 
     border-bottom: 2px dashed #333;
     padding-bottom: 15px;
     margin-top: 0;
@@ -194,35 +162,88 @@ sera alterado pela animacao */
 
 .conteudo-menu button:hover {
     background-color: #333;
-    color: #d8c3a5; /* Inverte a cor, parecendo um carimbo preenchido */
-    transform: scale(1.02); /* Dá uma leve crescida ao passar o mouse */
+    color: #d8c3a5; 
+    transform: scale(1.02); 
 }
 
 .conteudo-menu p {
     font-weight: bold;
-    color: #555; /* Cinza escuro para imitar lápis/tinta desbotada no rodapé */
+    color: #555; 
 }
+
+/* ==========================================
+   MENU IN-GAME E QUADRO DE PISTAS
+   ========================================== */
+.menu-in-game-container {
+    display: flex;
+    gap: 30px; 
+    max-width: 90vw;
+    align-items: stretch; 
+}
+
+.quadro-pistas {
+    background-color: #d8c3a5; 
+    border: 3px solid #333;
+    border-radius: 5px;
+    padding: 40px 30px;
+    min-width: 350px;
+    max-width: 450px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #2c2c2c;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+}
+
+.quadro-pistas h2 {
+    color: #8b0000;
+    border-bottom: 2px dashed #333;
+    padding-bottom: 15px;
+    margin-top: 0;
+    letter-spacing: 2px;
+}
+
+#lista-pistas-encontradas {
+    list-style-type: square;
+    padding-left: 20px;
+    overflow-y: auto;
+    flex: 1;
+    margin: 0;
+}
+
+#lista-pistas-encontradas li {
+    margin-bottom: 15px;
+    font-weight: bold;
+    line-height: 1.4;
+    border-bottom: 1px dashed rgba(0,0,0,0.2);
+    padding-bottom: 10px;
+}
+
+#lista-pistas-encontradas li.pista-vazia {
+    list-style: none;
+    color: #777;
+    font-style: italic;
+    border: none;
+    margin-left: -20px; 
+}
+
 /* ==========================================
    GLOSSÁRIO (ESTILO PASTA CONFIDENCIAL)
    ========================================== */
-/* 1. CONTAINER TRANSPARENTE */
 .pasta-container {
     position: relative;
     width: 98vw;
     height: 98vh;
     max-width: 1800px;
     max-height: 1000px;
-    
-    background: transparent; /* ZERAMOS O FUNDO AQUI! */
-    box-shadow: none; /* Tiramos a sombra do container invisível */
-    
+    background: transparent; 
+    box-shadow: none; 
     display: flex;
-    gap: 30px; /* Adiciona um espaço bonito entre o painel esquerdo e a imagem direita */
+    gap: 30px; 
     padding: 3% 4% 3% 1.5%; 
     box-sizing: border-box;
 }
 
-/* O botão de fechar (X) estilo carimbo */
 .btn-fechar-pasta {
     position: absolute;
     top: -15px;
@@ -249,9 +270,8 @@ sera alterado pela animacao */
     color: #d8c3a5 !important;
 }
 
-/* 2. PROPORÇÕES RESTAURADAS E FONTES */
 .pagina-esquerda {
-    flex: 0.33; /* Volta a ocupar apenas 1/3 da tela */
+    flex: 0.33; 
     padding: 10px 15px 20px 20px; 
     overflow-y: auto; 
     color: #2c2c2c;
@@ -259,14 +279,13 @@ sera alterado pela animacao */
 }
 
 .pagina-direita {
-    flex: 0.67; /* Volta a ocupar 2/3 para a imagem gigante */
+    flex: 0.67; 
     padding: 10px;
     display: flex;
     justify-content: center; 
     align-items: center;
 }
 
-/* 3. ÍNDICE COM FUNDO SÓLIDO (RECORTES DE PAPEL) */
 .lista-glossario {
     list-style-type: none;
     padding: 0;
@@ -279,21 +298,21 @@ sera alterado pela animacao */
     box-sizing: border-box;
     padding: 12px 15px;
     margin-bottom: 8px;
-    background-color: #e8dcc7; /* Papel um pouco mais claro para destacar a leitura */
-    border: 2px solid #333; /* Borda forte imitando caneta/recorte */
+    background-color: #e8dcc7; 
+    border: 2px solid #333; 
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s;
     color: #333;
     font-family: 'Courier New', Courier, monospace;
-    box-shadow: 3px 3px 0px rgba(0,0,0,0.2); /* Sombreado duro estilo jogo antigo */
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.2); 
 }
 
 .lista-glossario li:hover {
     background-color: #333; 
     color: #d8c3a5; 
-    transform: translateX(5px) translateY(-2px); /* Pula pra frente e pra cima */
+    transform: translateX(5px) translateY(-2px); 
     box-shadow: 5px 5px 0px rgba(0,0,0,0.4);
 }
 
@@ -310,27 +329,18 @@ sera alterado pela animacao */
 /* ==========================================
    SCROLLBAR CUSTOMIZADO ESTILO JOGO
    ========================================== */
-.pagina-esquerda::-webkit-scrollbar {
-    width: 8px; /* Deixa o scroll fininho */
-}
-.pagina-esquerda::-webkit-scrollbar-track {
-    background: transparent; /* Fundo transparente */
-}
-.pagina-esquerda::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3); /* Escurinho translúcido */
-    border-radius: 10px; /* Bordas arredondadas */
-}
-.pagina-esquerda::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.6); /* Fica mais escuro ao passar o mouse */
-}
+.pagina-esquerda::-webkit-scrollbar { width: 8px; }
+.pagina-esquerda::-webkit-scrollbar-track { background: transparent; }
+.pagina-esquerda::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.3); border-radius: 10px; }
+.pagina-esquerda::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.6); }
 
 /* ==========================================
    BLOCO DE ANOTAÇÕES (CHECKLIST)
    ========================================== */
 .bloco-anotacoes {
-    background-color: #d8c3a5; /* Cor de papel craft / papel reciclado */
+    background-color: #d8c3a5; 
     width: 90vw;
-    max-width: 550px; /* Mantém o formato estreito e comprido da sua imagem */
+    max-width: 550px; 
     height: 95vh;
     max-height: 850px;
     border-radius: 8px;
@@ -338,12 +348,12 @@ sera alterado pela animacao */
     display: flex;
     flex-direction: column;
     position: relative;
-    font-family: 'Courier New', Courier, monospace; /* Fonte estilo máquina de escrever */
+    font-family: 'Courier New', Courier, monospace; 
     color: #2c2c2c;
 }
 
 .bloco-cabecalho {
-    background-color: #e0f7fa; /* Azul clarinho do topo da imagem */
+    background-color: #e0f7fa; 
     text-align: center;
     padding: 15px 20px 10px;
     border-bottom: 3px solid #333;
@@ -372,18 +382,10 @@ sera alterado pela animacao */
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
-.bloco-conteudo {
-    flex: 1;
-    overflow-y: auto;
-}
+.bloco-conteudo { flex: 1; overflow-y: auto; }
 
-/* Container de cada Seção (Suspeitos, Locais, Problemas) */
-.secao-bloco {
-    display: flex;
-    border-bottom: 3px solid #333;
-}
+.secao-bloco { display: flex; border-bottom: 3px solid #333; }
 
-/* Título lateral virado de lado */
 .secao-titulo {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
@@ -398,7 +400,6 @@ sera alterado pela animacao */
     justify-content: center;
 }
 
-/* Lista de itens com linhas pontilhadas */
 .secao-lista {
     flex: 1;
     display: flex;
@@ -410,23 +411,15 @@ sera alterado pela animacao */
     justify-content: space-between;
     align-items: center;
     padding: 6px 15px;
-    border-bottom: 2px dashed rgba(0,0,0,0.3); /* Linha tracejada da sua imagem */
+    border-bottom: 2px dashed rgba(0,0,0,0.3); 
     font-weight: bold;
     font-size: 1.1em;
 }
 
-.linha-item:last-child {
-    border-bottom: none;
-}
+.linha-item:last-child { border-bottom: none; }
 
-/* Onde ficam as duas bolinhas brancas */
-.container-bolinhas {
-    display: flex;
-    gap: 8px; /* Espaço entre as bolinhas */
-}
+.container-bolinhas { display: flex; gap: 8px; }
 
-/* Estilo das caixas de seleção virando as bolinhas da imagem */
-/* BOLINHAS DE ESTADO (✔, ✖, ?) */
 .bolinha-status {
     width: 24px;
     height: 24px;
@@ -439,41 +432,22 @@ sera alterado pela animacao */
     justify-content: center;
     font-weight: bold;
     font-size: 16px;
-    user-select: none; /* Previne que o texto do bloco seja selecionado ao clicar rápido */
+    user-select: none; 
     transition: all 0.2s;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Estado 0: Branco (Vazio) */
-.bolinha-status.vazio {
-    background-color: white;
-    color: transparent;
-}
-
-/* Estado 1: Marcado (Verde) */
-.bolinha-status.certo {
-    background-color: #4CAF50;
-    border-color: #2e7d32;
-    color: white;
-}
+.bolinha-status.vazio { background-color: white; color: transparent; }
+.bolinha-status.certo { background-color: #4CAF50; border-color: #2e7d32; color: white; }
 .bolinha-status.certo::after { content: '✔'; }
-
-/* Estado 2: Eliminado (Vermelho) */
-.bolinha-status.errado {
-    background-color: #f44336;
-    border-color: #c62828;
-    color: white;
-}
+.bolinha-status.errado { background-color: #f44336; border-color: #c62828; color: white; }
 .bolinha-status.errado::after { content: '✖'; }
-
-/* Estado 3: Dúvida (Amarelo/Laranja) */
-.bolinha-status.duvida {
-    background-color: #ff9800;
-    border-color: #ef6c00;
-    color: white;
-}
+.bolinha-status.duvida { background-color: #ff9800; border-color: #ef6c00; color: white; }
 .bolinha-status.duvida::after { content: '?'; }
 
+/* ==========================================
+   TELA DE SETUP
+   ========================================== */
 #tela-setup {
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 300;
@@ -533,20 +507,20 @@ sera alterado pela animacao */
     bottom: 30px;
     right: 30px;
     width: 140px;
-    background-color: #d8c3a5; /* Cor de papel craft / pasta do jogo */
-    border: 3px solid #333; /* Borda escura imitando traço forte de caneta */
+    background-color: #d8c3a5; 
+    border: 3px solid #333; 
     border-radius: 8px;
     z-index: 400;
     box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     color: #2c2c2c;
     text-align: center;
     user-select: none;
-    font-family: 'Courier New', Courier, monospace; /* Fonte de máquina de escrever do glossário */
+    font-family: 'Courier New', Courier, monospace; 
 }
 
 #dado-header {
-    background-color: #333; /* Imita uma fita escura colada no topo */
-    color: #d8c3a5; /* Texto na cor do papel */
+    background-color: #333; 
+    color: #d8c3a5; 
     padding: 8px;
     font-size: 0.9em;
     font-weight: bold;
@@ -555,28 +529,24 @@ sera alterado pela animacao */
     letter-spacing: 1px;
 }
 
-#dado-header:active {
-    cursor: grabbing;
-}
+#dado-header:active { cursor: grabbing; }
 
-.dado-conteudo {
-    padding: 15px 10px;
-}
+.dado-conteudo { padding: 15px 10px; }
 
 #dado-resultado {
     font-size: 3em;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #8b0000; /* Vermelho escuro, imitando tinta de carimbo "CONFIDENCIAL" */
-    text-shadow: none; /* Removendo o brilho digital que tinha antes */
+    color: #8b0000; 
+    text-shadow: none; 
 }
 
 #btn-rolar-dado {
     width: 100%;
     padding: 10px;
-    background-color: transparent; /* Fundo transparente para mostrar a cor de papel */
+    background-color: transparent; 
     color: #333;
-    border: 2px dashed #333; /* Borda tracejada imitando selo/recorte */
+    border: 2px dashed #333; 
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
@@ -587,13 +557,13 @@ sera alterado pela animacao */
 
 #btn-rolar-dado:hover { 
     background-color: #333; 
-    color: #d8c3a5; /* Inverte as cores como um efeito de carimbo ao passar o mouse */
+    color: #d8c3a5; 
     border-style: solid;
 }
+
 /* ==========================================
    EFEITOS DE MOVIMENTAÇÃO (HIGHLIGHTS)
    ========================================== */
-/* Chão normal alcançável (Verde Translúcido) */
 .celula.alcancavel {
     background-color: rgba(76, 175, 80, 0.4); 
     cursor: pointer;
@@ -603,7 +573,6 @@ sera alterado pela animacao */
 
 .celula.alcancavel:hover { background-color: rgba(76, 175, 80, 0.7); }
 
-/* Sala alcançável (Laranja/Amarelo) */
 .celula.alcancavel-sala {
     background-color: rgba(255, 152, 0, 0.5); 
     cursor: pointer;

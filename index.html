@@ -18,72 +18,73 @@
 
     <div id="tela-tabuleiro" class="tela">
         <img src="assets/img/Mapa_v0.01.png" alt="Tabuleiro" class="fundo-img">
-        
         <div id="grade-tabuleiro"></div>
-        
-
-        </div>
+    </div>
 
     <div id="modal-investigacao" style="display: none;"></div>
 
     <div id="tela-setup" class="tela">
-    <div class="container-setup">
-        <div id="setup-passo-1" class="setup-conteudo">
-            <h2>📜 Briefing da Missão</h2>
-            <div class="texto-instrucoes">
-                <p>1. Explore as organelas da célula para coletar pistas.</p>
-                <p>2. Cada sala pode conter informações cruciais sobre o culpado.</p>
-                <p>3. Use o Bloco de Anotações (M) para eliminar suspeitos.</p>
-                <p>4. O primeiro a identificar o Problema, o Local e o Suspeito vence.</p>
+        <div class="container-setup">
+            <div id="setup-passo-1" class="setup-conteudo">
+                <h2>📜 Briefing da Missão</h2>
+                <div class="texto-instrucoes">
+                    <p>1. Explore as organelas da célula para coletar pistas.</p>
+                    <p>2. Cada sala pode conter informações cruciais sobre o culpado.</p>
+                    <p>3. Use o Bloco de Anotações (M) para eliminar suspeitos.</p>
+                    <p>4. O primeiro a identificar o Problema, o Local e o Suspeito vence.</p>
+                </div>
+                <button onclick="proximoPassoSetup(2)" class="btn-proximo">Próximo</button>
             </div>
-            <button onclick="proximoPassoSetup(2)" class="btn-proximo">Próximo</button>
-        </div>
 
-        <div id="setup-passo-2" class="setup-conteudo" style="display: none;">
-            <h2>👥 Equipe de Investigação</h2>
-            <p>Quantos detetives participarão?</p>
-            <div class="selecao-qtd">
-                <button onclick="configurarJogadores(2)">2 Jogadores</button>
-                <button onclick="configurarJogadores(3)">3 Jogadores</button>
+            <div id="setup-passo-2" class="setup-conteudo" style="display: none;">
+                <h2>👥 Equipe de Investigação</h2>
+                <p>Quantos detetives participarão?</p>
+                <div class="selecao-qtd">
+                    <button onclick="configurarJogadores(2)">2 Jogadores</button>
+                    <button onclick="configurarJogadores(3)">3 Jogadores</button>
+                </div>
+                <div id="campos-nomes" style="margin-top: 20px;"></div>
+                <button id="btn-iniciar-jogo" style="display: none;" onclick="iniciarPartidaComp()" class="btn-proximo">Iniciar Investigação</button>
             </div>
-            <div id="campos-nomes" style="margin-top: 20px;"></div>
-            <button id="btn-iniciar-jogo" style="display: none;" onclick="iniciarPartidaComp()" class="btn-proximo">Iniciar Investigação</button>
         </div>
     </div>
-</div>
 
-    <!-- Menu In-Game (Abre com M) -->
     <div id="menu-in-game" class="modal-oculto">
-        <div class="conteudo-menu">
-            <h2>PAUSA_</h2>
-            <button id="btn-in-voltar">Voltar ao Menu Principal</button>
-            <button id="btn-in-glossario">Glossário</button>
-            <button id="btn-in-suspeitos">Lista de Suspeitos</button>
-            <p style="margin-top: 15px; font-size: 0.8em;">Pressione 'M' novamente para voltar ao jogo</p>
+        <div class="menu-in-game-container">
+            
+            <div class="conteudo-menu">
+                <h2>PAUSA_</h2>
+                <button id="btn-in-voltar">Voltar ao Menu Principal</button>
+                <button id="btn-in-glossario">Glossário</button>
+                <button id="btn-in-suspeitos">Lista de Suspeitos</button>
+                <p style="margin-top: 15px; font-size: 0.8em;">Pressione 'M' novamente para voltar ao jogo</p>
+            </div>
+
+            <div class="quadro-pistas">
+                <h2>🔍 Caso Atual:</h2>
+                <ul id="lista-pistas-encontradas">
+                    <li class="pista-vazia">Nenhuma pista encontrada ainda... Explore as salas!</li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
-    <!-- Glossário (Estilo Pasta Confidencial) -->
     <div id="modal-glossario" class="modal-oculto">
         <div class="pasta-container">
-            <!-- Botão de fechar no formato de um "X" vermelho no canto da pasta -->
             <button class="fechar-submodal btn-fechar-pasta" data-target="modal-glossario">X</button>
             
-            <!-- Página Esquerda: Índice de Arquivos -->
             <div class="pagina-esquerda">
-                
-                <h3 style="margin-top: 15px; color: #8b0000;">👥 Suspeitos</h3>
+                <h3 style="margin-top: 15px; color: #8b0000; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">👥 Suspeitos</h3>
                 <ul id="lista-suspeitos" class="lista-glossario"></ul>
 
-                <h3 style="margin-top: 20px; color: #00008b;">📍 Locais da Célula</h3>
+                <h3 style="margin-top: 20px; color: #8b0000; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">📍 Locais da Célula</h3>
                 <ul id="lista-locais" class="lista-glossario"></ul>
             </div>
 
-            <!-- Página Direita: Visualização do Arquivo -->
             <div class="pagina-direita">
                 <h2 id="detalhe-titulo">Selecione um arquivo</h2>
                 <div id="detalhe-imagem-container">
-                    <!-- A imagem do local/suspeito será injetada aqui -->
                     <img id="detalhe-imagem" src="" alt="Imagem do Arquivo" style="display: none;">
                 </div>
                 <p id="detalhe-descricao" style="margin-top: 15px;">
@@ -93,20 +94,14 @@
         </div>
     </div>
 
-    <!-- Suspeitos (Bloco de Anotações) -->
     <div id="modal-suspeitos" class="modal-oculto">
         <div class="bloco-anotacoes">
-            
             <div class="bloco-cabecalho">
-                <!-- Bolinhas simulando o espiral do caderno -->
                 <div class="espiral"></div>
                 <h2>BLOCO DE ANOTAÇÕES</h2>
                 <button class="fechar-submodal btn-fechar-bloco" data-target="modal-suspeitos">X</button>
             </div>
-
-            <!-- O conteúdo da lista será injetado aqui pelo JavaScript -->
             <div id="bloco-conteudo" class="bloco-conteudo"></div>
-            
         </div>
     </div>
 
