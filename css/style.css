@@ -1,9 +1,11 @@
-/* Garante que o fundo não tenha margens e não role */
+/* ==========================================
+   1. CONFIGURAÇÕES GERAIS E DA TELA
+   ========================================== */
 body {
-    background-color: #000; /* Fundo preto para as bordas se a tela for muito larga */
+    background-color: #000;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Remove as barras de rolagem */
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +13,6 @@ body {
     width: 100vw;
 }
 
-/* A tela agora ocupa todo o espaço visível */
 .tela {
     display: none;
     position: relative;
@@ -23,29 +24,51 @@ body {
     display: block;
 }
 
-/* A imagem vai esticar para cobrir a tela inteira */
 .fundo-img {
     width: 100%;
     height: 100%;
-    object-fit: fill; /* Isso garante que a imagem preencha o container exatamente */
+    object-fit: fill;
     display: block;
 }
 
-/* Configuração base de todas as hitboxes */
+/* ==========================================
+   2. HITBOXES DO MENU PRINCIPAL
+   ========================================== */
 .hitbox {
     position: absolute;
-    background-color: rgba(255, 0, 0, 0.4); /* Vermelho transparente. Troque para transparent no final do projeto */
+    background-color: transparent;
     border: none;
     cursor: pointer;
-    left: 5%; 
+    left: 5%;
 }
 
-/* Posições individuais estimadas */
-.hitbox-jogar { top: 25%; width: 18%; height: 10%; }
-.hitbox-glossario { top: 38%; width: 29%; height: 10%; }
-.hitbox-creditos { top: 51%; width: 26%; height: 10%; }
-.hitbox-configuracoes { top: 65%; width: 41%; height: 10%; }
+.hitbox-jogar {
+    top: 25%;
+    width: 18%;
+    height: 10%;
+}
 
+.hitbox-glossario {
+    top: 38%;
+    width: 29%;
+    height: 10%;
+}
+
+.hitbox-creditos {
+    top: 51%;
+    width: 26%;
+    height: 10%;
+}
+
+.hitbox-configuracoes {
+    top: 65%;
+    width: 41%;
+    height: 10%;
+}
+
+/* ==========================================
+   3. TABULEIRO E PEÕES DOS JOGADORES
+   ========================================== */
 #grade-tabuleiro {
     position: absolute;
     top: 0;
@@ -59,55 +82,25 @@ body {
 }
 
 .celula {
-    border: 0.1px solid rgba(255, 255, 255, 0.03); /* Linha bem sutil para guiar */
+    border: 0.1px solid rgba(255, 255, 255, 0.03);
     box-sizing: border-box;
 }
 
-/* Cor para as áreas de sala (modo Debug - retirar ao final do projeto) */
 .area-sala {
-    background-color: rgba(255, 0, 0, 0.4); 
+    background-color: rgba(255, 0, 0, 0.4);
 }
 
-/* Estilo visual para o pino do jogador */
 .jogador {
-    background-color: #00ff00 !important; 
+    background-color: #00ff00 !important;
     border-radius: 50%;
     box-shadow: 0 0 10px #00ff00;
-    margin: 15%; 
+    margin: 15%;
     position: relative;
-    z-index: 10; 
-}
-
-/* Estilo do Modal Rápido de Investigação */
-#modal-investigacao {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.85); 
-    z-index: 100; 
-    display: none; 
-    justify-content: center;
-    align-items: center;
-}
-
-.conteudo-modal {
-    background-color: #2c2c2c;
-    border: 2px solid #4CAF50;
-    border-radius: 10px;
-    padding: 40px;
-    text-align: center;
-    max-width: 600px;
-}
-
-.conteudo-modal h2 {
-    color: #4CAF50;
-    margin-bottom: 20px;
+    z-index: 10;
 }
 
 /* ==========================================
-   SISTEMA DE MENUS E POP-UPS
+   4. SISTEMA DE MENUS E TELAS DE PAUSA
    ========================================== */
 .modal-oculto {
     position: fixed;
@@ -116,16 +109,15 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.85);
-    z-index: 200; 
-    display: none; 
+    z-index: 200;
+    display: none;
     justify-content: center;
     align-items: center;
 }
 
-/* Estilo específico para a caixa do menu In-Game (Tema Pasta de Investigação) */
 .conteudo-menu {
-    background-color: #d8c3a5; 
-    border: 3px solid #333; 
+    background-color: #d8c3a5;
+    border: 3px solid #333;
     border-radius: 5px;
     padding: 40px;
     text-align: center;
@@ -133,13 +125,13 @@ body {
     flex-direction: column;
     gap: 15px;
     min-width: 350px;
-    font-family: 'Courier New', Courier, monospace; 
+    font-family: 'Courier New', Courier, monospace;
     color: #2c2c2c;
     box-shadow: 0 15px 30px rgba(0,0,0,0.8);
 }
 
 .conteudo-menu h2 {
-    color: #8b0000; 
+    color: #8b0000;
     border-bottom: 2px dashed #333;
     padding-bottom: 15px;
     margin-top: 0;
@@ -162,32 +154,25 @@ body {
 
 .conteudo-menu button:hover {
     background-color: #333;
-    color: #d8c3a5; 
-    transform: scale(1.02); 
+    color: #d8c3a5;
+    transform: scale(1.02);
 }
 
-.conteudo-menu p {
-    font-weight: bold;
-    color: #555; 
-}
-
-/* ==========================================
-   MENU IN-GAME E QUADRO DE PISTAS
-   ========================================== */
 .menu-in-game-container {
     display: flex;
-    gap: 30px; 
+    gap: 30px;
     max-width: 90vw;
-    align-items: stretch; 
+    align-items: stretch;
 }
 
+/* Quadro de Pistas (Menu M) */
 .quadro-pistas {
-    background-color: #d8c3a5; 
+    background-color: #d8c3a5;
     border: 3px solid #333;
     border-radius: 5px;
     padding: 40px 30px;
     min-width: 350px;
-    max-width: 450px;
+    max-width: 500px;
     font-family: 'Courier New', Courier, monospace;
     color: #2c2c2c;
     box-shadow: 0 15px 30px rgba(0,0,0,0.8);
@@ -204,8 +189,8 @@ body {
 }
 
 #lista-pistas-encontradas {
-    list-style-type: square;
-    padding-left: 20px;
+    list-style-type: none;
+    padding-left: 0;
     overflow-y: auto;
     flex: 1;
     margin: 0;
@@ -220,44 +205,65 @@ body {
 }
 
 #lista-pistas-encontradas li.pista-vazia {
-    list-style: none;
     color: #777;
     font-style: italic;
     border: none;
-    margin-left: -20px; 
 }
 
 /* ==========================================
-   GLOSSÁRIO (ESTILO PASTA CONFIDENCIAL)
+   5. MODAL DE INVESTIGAÇÃO RÁPIDA (SALA)
+   ========================================== */
+#modal-investigacao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudo-modal {
+    background-color: #2c2c2c;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+}
+
+/* ==========================================
+   6. GLOSSÁRIO INTERATIVO E RESPONSIVO
    ========================================== */
 .pasta-container {
     position: relative;
-    width: 98vw;
-    height: 98vh;
-    max-width: 1800px;
-    max-height: 1000px;
-    background: transparent; 
-    box-shadow: none; 
+    width: 95vw;
+    height: 95vh;
+    max-width: 1300px;
+    background: transparent !important;
+    box-shadow: none !important;
     display: flex;
-    gap: 30px; 
-    padding: 3% 4% 3% 1.5%; 
+    flex-wrap: wrap; /* Permite quebrar linha em telas muito pequenas */
+    gap: 25px;
+    padding: 2%;
     box-sizing: border-box;
 }
 
 .btn-fechar-pasta {
     position: absolute;
-    top: -15px;
-    right: -15px;
-    background-color: #d8c3a5 !important; 
-    color: #8b0000 !important; 
-    border: 2px solid #333 !important; 
+    top: -10px;
+    right: -10px;
+    background-color: #d8c3a5 !important;
+    color: #8b0000 !important;
+    border: 2px solid #333 !important;
     border-radius: 50% !important;
     width: 45px;
     height: 45px;
     font-size: 1.2em;
     font-weight: bold;
-    padding: 0;
-    margin: 0;
     z-index: 10;
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     font-family: 'Courier New', Courier, monospace;
@@ -266,24 +272,43 @@ body {
 }
 
 .btn-fechar-pasta:hover {
-    background-color: #8b0000 !important; 
+    background-color: #8b0000 !important;
     color: #d8c3a5 !important;
 }
 
+/* LADO ESQUERDO (ÍNDICE): 100% limpo, sem caixas cinzas ou fundos feios */
 .pagina-esquerda {
-    flex: 0.33; 
-    padding: 10px 15px 20px 20px; 
-    overflow-y: auto; 
+    flex: 1;
+    min-width: 280px; /* Não deixa o menu amassar */
+    max-width: 360px;
+    height: 100%;
+    padding: 10px 15px 20px 0;
+    overflow-y: auto;
     color: #2c2c2c;
     font-family: 'Courier New', Courier, monospace;
+    
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
+/* LADO DIREITO (CONTEÚDO): O único painel rígido de papelão */
 .pagina-direita {
-    flex: 0.67; 
-    padding: 10px;
+    flex: 2;
+    min-width: 320px;
+    height: 100%;
+    padding: 25px;
     display: flex;
-    justify-content: center; 
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    overflow-y: auto;
+    
+    background-color: #d8c3a5 !important;
+    border: 3px solid #333 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.8) !important;
 }
 
 .lista-glossario {
@@ -298,49 +323,68 @@ body {
     box-sizing: border-box;
     padding: 12px 15px;
     margin-bottom: 8px;
-    background-color: #e8dcc7; 
-    border: 2px solid #333; 
+    background-color: #e8dcc7;
+    border: 2px solid #333;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s;
     color: #333;
     font-family: 'Courier New', Courier, monospace;
-    box-shadow: 3px 3px 0px rgba(0,0,0,0.2); 
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
 }
 
 .lista-glossario li:hover {
-    background-color: #333; 
-    color: #d8c3a5; 
-    transform: translateX(5px) translateY(-2px); 
+    background-color: #333;
+    color: #d8c3a5;
+    transform: translateX(5px) translateY(-2px);
     box-shadow: 5px 5px 0px rgba(0,0,0,0.4);
+}
+
+/* REMOÇÃO ABSOLUTA DE CAIXAS ATRÁS DO PNG DA PASTA */
+#detalhe-imagem-container {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 #detalhe-imagem {
     width: 100%;
-    height: 100%; 
-    max-height: 85vh; 
-    object-fit: contain; 
+    height: 100%;
+    max-height: 75vh;
+    object-fit: contain;
     margin: 0;
-    border-radius: 2px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+    
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+/* Customização dos Scrollbars internos do Glossário */
+.pagina-esquerda::-webkit-scrollbar,
+.pagina-direita::-webkit-scrollbar {
+    width: 8px;
+}
+.pagina-esquerda::-webkit-scrollbar-track,
+.pagina-direita::-webkit-scrollbar-track {
+    background: transparent;
+}
+.pagina-esquerda::-webkit-scrollbar-thumb,
+.pagina-direita::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
 /* ==========================================
-   SCROLLBAR CUSTOMIZADO ESTILO JOGO
-   ========================================== */
-.pagina-esquerda::-webkit-scrollbar { width: 8px; }
-.pagina-esquerda::-webkit-scrollbar-track { background: transparent; }
-.pagina-esquerda::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.3); border-radius: 10px; }
-.pagina-esquerda::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.6); }
-
-/* ==========================================
-   BLOCO DE ANOTAÇÕES (CHECKLIST)
+   7. CADERNO / BLOCO DE ANOTAÇÕES
    ========================================== */
 .bloco-anotacoes {
-    background-color: #d8c3a5; 
+    background-color: #d8c3a5;
     width: 90vw;
-    max-width: 550px; 
+    max-width: 550px;
     height: 95vh;
     max-height: 850px;
     border-radius: 8px;
@@ -348,12 +392,12 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    font-family: 'Courier New', Courier, monospace; 
+    font-family: 'Courier New', Courier, monospace;
     color: #2c2c2c;
 }
 
 .bloco-cabecalho {
-    background-color: #e0f7fa; 
+    background-color: #e0f7fa;
     text-align: center;
     padding: 15px 20px 10px;
     border-bottom: 3px solid #333;
@@ -382,9 +426,15 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
-.bloco-conteudo { flex: 1; overflow-y: auto; }
+.bloco-conteudo {
+    flex: 1;
+    overflow-y: auto;
+}
 
-.secao-bloco { display: flex; border-bottom: 3px solid #333; }
+.secao-bloco {
+    display: flex;
+    border-bottom: 3px solid #333;
+}
 
 .secao-titulo {
     writing-mode: vertical-rl;
@@ -411,14 +461,19 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 6px 15px;
-    border-bottom: 2px dashed rgba(0,0,0,0.3); 
+    border-bottom: 2px dashed rgba(0,0,0,0.3);
     font-weight: bold;
     font-size: 1.1em;
 }
 
-.linha-item:last-child { border-bottom: none; }
+.linha-item:last-child {
+    border-bottom: none;
+}
 
-.container-bolinhas { display: flex; gap: 8px; }
+.container-bolinhas {
+    display: flex;
+    gap: 8px;
+}
 
 .bolinha-status {
     width: 24px;
@@ -432,7 +487,6 @@ body {
     justify-content: center;
     font-weight: bold;
     font-size: 16px;
-    user-select: none; 
     transition: all 0.2s;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -446,7 +500,7 @@ body {
 .bolinha-status.duvida::after { content: '?'; }
 
 /* ==========================================
-   TELA DE SETUP
+   8. TELA DE SETUP (BRIEFING E CHASSIS)
    ========================================== */
 #tela-setup {
     background-color: rgba(0, 0, 0, 0.9);
@@ -466,16 +520,15 @@ body {
     color: white;
 }
 
-.setup-conteudo h2 { color: #4CAF50; margin-bottom: 20px; }
-.texto-instrucoes { text-align: left; margin-bottom: 30px; line-height: 1.6; }
+.setup-conteudo h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
 
-.selecao-qtd button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
-    background: #333;
-    color: white;
-    border: 1px solid #4CAF50;
+.texto-instrucoes {
+    text-align: left;
+    margin-bottom: 30px;
+    line-height: 1.6;
 }
 
 .input-nome {
@@ -499,7 +552,7 @@ body {
 }
 
 /* ==========================================
-   D12 FLUTUANTE (DRAGGABLE) - TEMA PASTA CSI
+   9. INTERFACE DO DADO FLUTUANTE (DRAGGABLE)
    ========================================== */
 #dado-flutuante {
     display: none;
@@ -507,20 +560,20 @@ body {
     bottom: 30px;
     right: 30px;
     width: 140px;
-    background-color: #d8c3a5; 
-    border: 3px solid #333; 
+    background-color: #d8c3a5;
+    border: 3px solid #333;
     border-radius: 8px;
     z-index: 400;
     box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     color: #2c2c2c;
     text-align: center;
     user-select: none;
-    font-family: 'Courier New', Courier, monospace; 
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #dado-header {
-    background-color: #333; 
-    color: #d8c3a5; 
+    background-color: #333;
+    color: #d8c3a5;
     padding: 8px;
     font-size: 0.9em;
     font-weight: bold;
@@ -529,24 +582,27 @@ body {
     letter-spacing: 1px;
 }
 
-#dado-header:active { cursor: grabbing; }
+#dado-header:active {
+    cursor: grabbing;
+}
 
-.dado-conteudo { padding: 15px 10px; }
+.dado-conteudo {
+    padding: 15px 10px;
+}
 
 #dado-resultado {
     font-size: 3em;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #8b0000; 
-    text-shadow: none; 
+    color: #8b0000;
 }
 
 #btn-rolar-dado {
     width: 100%;
     padding: 10px;
-    background-color: transparent; 
+    background-color: transparent;
     color: #333;
-    border: 2px dashed #333; 
+    border: 2px dashed #333;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
@@ -555,86 +611,38 @@ body {
     transition: all 0.2s;
 }
 
-#btn-rolar-dado:hover { 
-    background-color: #333; 
-    color: #d8c3a5; 
+#btn-rolar-dado:hover {
+    background-color: #333;
+    color: #d8c3a5;
     border-style: solid;
 }
 
 /* ==========================================
-   EFEITOS DE MOVIMENTAÇÃO (HIGHLIGHTS)
+   10. BOTÕES DINÂMICOS, TURNOS E MAPA
    ========================================== */
 .celula.alcancavel {
-    background-color: rgba(76, 175, 80, 0.4); 
+    background-color: rgba(76, 175, 80, 0.4);
     cursor: pointer;
     border: 1px solid rgba(76, 175, 80, 0.8);
     box-sizing: border-box;
 }
 
-.celula.alcancavel:hover { background-color: rgba(76, 175, 80, 0.7); }
+.celula.alcancavel:hover {
+    background-color: rgba(76, 175, 80, 0.7);
+}
 
 .celula.alcancavel-sala {
-    background-color: rgba(255, 152, 0, 0.5); 
+    background-color: rgba(255, 152, 0, 0.5);
     cursor: pointer;
     border: 2px solid #ff9800;
     box-sizing: border-box;
     box-shadow: inset 0 0 10px rgba(255, 152, 0, 0.5);
 }
 
-.celula.alcancavel-sala:hover { background-color: rgba(255, 152, 0, 0.8); }
-
-/* ==========================================
-   PLACAR MELHOR DE 3 (MD3)
-   ========================================== */
-.placar-md3-caixa {
-    position: absolute; 
-    top: -65px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    display: flex; 
-    gap: 15px; 
-    background: #d8c3a5; 
-    padding: 10px 25px; 
-    border: 3px solid #333; 
-    border-radius: 8px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.8);
-    z-index: 10;
+.celula.alcancavel-sala:hover {
+    background-color: rgba(255, 152, 0, 0.8);
 }
 
-.md3-dot {
-    width: 25px;
-    height: 25px;
-    background-color: white; /* Começa branco */
-    border: 3px solid #333;
-    border-radius: 50%;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-    transition: background-color 0.3s;
-}
-
-#btn-passar-turno {
-    width: 100%;
-    padding: 10px;
-    background-color: transparent; 
-    color: #8b0000;
-    border: 2px dashed #8b0000; 
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.1em;
-    font-family: 'Courier New', Courier, monospace;
-    transition: all 0.2s;
-    margin-top: 10px;
-}
-
-#btn-passar-turno:hover { 
-    background-color: #8b0000; 
-    color: #d8c3a5; 
-    border-style: solid;
-}
-
-/* ==========================================
-   BOTÃO VOLTAR DO GLOSSÁRIO
-   ========================================== */
 .btn-voltar-glossario {
     background-color: transparent;
     color: #333;
@@ -655,4 +663,97 @@ body {
     background-color: #333;
     color: #d8c3a5;
     border-style: solid;
+}
+
+#btn-passar-turno {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    color: #8b0000;
+    border: 2px dashed #8b0000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+
+#btn-passar-turno:hover {
+    background-color: #8b0000;
+    color: #d8c3a5;
+    border-style: solid;
+}
+
+.btn-config {
+    width: 100%;
+    padding: 15px;
+    background-color: transparent;
+    color: #333;
+    border: 2px dashed #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+
+.btn-config:hover {
+    background-color: #333;
+    color: #d8c3a5;
+    border-style: solid;
+}
+
+/* ==========================================
+   11. PLACAR DO CAMPEONATO (MD3)
+   ========================================== */
+.placar-md3-caixa {
+    position: absolute;
+    top: -65px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    background: #d8c3a5;
+    padding: 10px 25px;
+    border: 3px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+    z-index: 10;
+}
+
+.md3-dot {
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border: 3px solid #333;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    transition: background-color 0.3s;
+}
+
+/* ==========================================
+   CORREÇÃO DE ROLAGEM NO RANKING
+   ========================================== */
+#lista-ranking {
+    overflow-x: hidden !important; /* Mata a barra horizontal de vez */
+    overflow-y: auto !important; /* Garante que a vertical funcione */
+    box-sizing: border-box !important;
+    padding-right: 5px !important; /* Afasta o texto do cantinho */
+}
+
+#lista-ranking li {
+    width: auto !important; /* Em vez de 100%, ele cresce só até onde dá */
+    margin-right: 8px !important; /* Dá espaço para a sombra e a animação de hover */
+    word-wrap: break-word !important; /* Força quebra de linha se o texto for gigante */
+    white-space: normal !important;
+}
+
+#btn-vitoria-ok:hover {
+    background-color: #333 !important;
+    color: #8b0000 !important;
+    transform: scale(1.05);
 }
