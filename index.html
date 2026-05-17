@@ -9,7 +9,6 @@
 <body>
     <div id="tela-menu" class="tela ativa">
         <img src="assets/img/1.png" alt="Menu Principal" class="fundo-img">
-        
         <button id="btn-jogar" class="hitbox hitbox-jogar"></button>
         <button id="btn-glossario" class="hitbox hitbox-glossario"></button>
         <button id="btn-creditos" class="hitbox hitbox-creditos"></button>
@@ -26,32 +25,34 @@
     <div id="tela-setup" class="tela">
         <div class="container-setup">
             <div id="setup-passo-1" class="setup-conteudo">
-                <h2>📜 Briefing da Missão</h2>
+                <h2>📜 Briefing da Missão (MD3)</h2>
                 <div class="texto-instrucoes">
                     <p>1. Explore as organelas da célula para coletar pistas.</p>
-                    <p>2. Cada sala pode conter informações cruciais sobre o culpado.</p>
+                    <p>2. Suas anotações e pistas são secretas (salvas no seu turno).</p>
                     <p>3. Use o Bloco de Anotações (M) para eliminar suspeitos.</p>
-                    <p>4. O primeiro a identificar o Problema, o Local e o Suspeito vence.</p>
+                    <p>4. <strong>O primeiro a resolver 2 Casos vence a Melhor de 3!</strong></p>
                 </div>
-                <button onclick="proximoPassoSetup(2)" class="btn-proximo">Próximo</button>
+                <button onclick="proximoPassoSetup()" class="btn-proximo">Próximo</button>
             </div>
 
             <div id="setup-passo-2" class="setup-conteudo" style="display: none;">
-                <h2>👥 Equipe de Investigação</h2>
-                <p>Quantos detetives participarão?</p>
-                <div class="selecao-qtd">
-                    <button onclick="configurarJogadores(2)">2 Jogadores</button>
-                    <button onclick="configurarJogadores(3)">3 Jogadores</button>
-                </div>
-                <div id="campos-nomes" style="margin-top: 20px;"></div>
-                <button id="btn-iniciar-jogo" style="display: none;" onclick="iniciarPartidaComp()" class="btn-proximo">Iniciar Investigação</button>
+                <h2>👥 Detetives (1 vs 1)</h2>
+                <div id="campos-nomes" style="margin-top: 20px;">
+                    </div>
+                <button id="btn-iniciar-jogo" onclick="iniciarPartidaComp()" class="btn-proximo">Iniciar Investigação</button>
             </div>
         </div>
     </div>
 
     <div id="menu-in-game" class="modal-oculto">
-        <div class="menu-in-game-container">
+        <div class="menu-in-game-container" style="position: relative;">
             
+            <div id="placar-md3" class="placar-md3-caixa">
+                <div class="md3-dot" id="md3-1"></div>
+                <div class="md3-dot" id="md3-2"></div>
+                <div class="md3-dot" id="md3-3"></div>
+            </div>
+
             <div class="conteudo-menu">
                 <h2>PAUSA_</h2>
                 <button id="btn-in-voltar">Voltar ao Menu Principal</button>
@@ -61,12 +62,11 @@
             </div>
 
             <div class="quadro-pistas">
-                <h2>🔍 Caso Atual:</h2>
+                <h2>🔍 Suas Pistas:</h2>
                 <ul id="lista-pistas-encontradas">
                     <li class="pista-vazia">Nenhuma pista encontrada ainda... Explore as salas!</li>
                 </ul>
             </div>
-
         </div>
     </div>
 
@@ -75,20 +75,50 @@
             <button class="fechar-submodal btn-fechar-pasta" data-target="modal-glossario">X</button>
             
             <div class="pagina-esquerda">
-                <h3 style="margin-top: 15px; color: #8b0000; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">👥 Suspeitos</h3>
-                <ul id="lista-suspeitos" class="lista-glossario"></ul>
+                
+                <div id="glossario-menu-principal">
+                    <h3 style="margin-top: 15px; color: #333; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">🗂️ ÍNDICE DE ARQUIVOS</h3>
+                    <ul class="lista-glossario">
+                        <li onclick="abrirSubmenuGlossario('suspeitos')">👥 Suspeitos</li>
+                        <li onclick="abrirSubmenuGlossario('locais')">📍 Locais da Célula</li>
+                        <li onclick="abrirSubmenuGlossario('casos')" style="color: #006400; border-color: #006400;">✅ Casos Resolvidos</li>
+                    </ul>
+                </div>
 
-                <h3 style="margin-top: 20px; color: #8b0000; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">📍 Locais da Célula</h3>
-                <ul id="lista-locais" class="lista-glossario"></ul>
+                <div id="glossario-submenu-suspeitos" style="display: none;">
+                    <button class="btn-voltar-glossario" onclick="voltarMenuGlossario()">🔙 Voltar ao Índice</button>
+                    <h3 style="margin-top: 15px; color: #8b0000; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">👥 Suspeitos</h3>
+                    <ul id="lista-suspeitos" class="lista-glossario"></ul>
+                </div>
+
+                <div id="glossario-submenu-locais" style="display: none;">
+                    <button class="btn-voltar-glossario" onclick="voltarMenuGlossario()">🔙 Voltar ao Índice</button>
+                    <h3 style="margin-top: 15px; color: #8b0000; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">📍 Locais da Célula</h3>
+                    <ul id="lista-locais" class="lista-glossario"></ul>
+                </div>
+
+                <div id="glossario-submenu-casos" style="display: none;">
+                    <button class="btn-voltar-glossario" onclick="voltarMenuGlossario()">🔙 Voltar ao Índice</button>
+                    <h3 style="margin-top: 15px; color: #006400; font-weight: bold; border-bottom: 2px dashed #333; padding-bottom: 5px;">✅ Casos Resolvidos</h3>
+                    <ul id="lista-casos-resolvidos" class="lista-glossario">
+                        <li class="pista-vazia">Nenhum caso resolvido ainda.</li>
+                    </ul>
+                </div>
+
             </div>
 
-            <div class="pagina-direita">
-                <h2 id="detalhe-titulo">Selecione um arquivo</h2>
-                <div id="detalhe-imagem-container">
+            <div class="pagina-direita" style="flex-direction: column; justify-content: flex-start; padding-top: 30px;">
+                <h2 id="detalhe-titulo" style="display: none; width: 100%; text-align: center; margin-bottom: 20px;">Selecione um arquivo</h2>
+                
+                <div id="detalhe-imagem-container" style="display: flex; justify-content: center; width: 100%;">
                     <img id="detalhe-imagem" src="" alt="Imagem do Arquivo" style="display: none;">
                 </div>
-                <p id="detalhe-descricao" style="margin-top: 15px;">
-                    Aguardando seleção de arquivo do banco de dados...
+
+                <div id="detalhe-texto-container" style="display: none; text-align: left; padding: 10px 30px; font-size: 1.1em; line-height: 1.6; color: #2c2c2c; width: 100%; overflow-y: auto;">
+                    </div>
+
+                <p id="detalhe-descricao" style="margin-top: 15px; font-style: italic; color: #555;">
+                    Selecione um arquivo no índice da esquerda para visualizar os detalhes.
                 </p>
             </div>
         </div>
@@ -108,8 +138,10 @@
     <div id="dado-flutuante">
         <div id="dado-header">🎲 Arraste</div>
         <div class="dado-conteudo">
+            <div id="nome-jogador-atual" style="font-weight: bold; margin-bottom: 10px; font-size: 1.1em; color: #333; border-bottom: 1px dashed #333; padding-bottom: 5px;">Vez de: -</div>
             <div id="dado-resultado">-</div>
             <button id="btn-rolar-dado">Rolar D12</button>
+            <button id="btn-passar-turno" style="display: none;">Encerrar Turno</button>
         </div>
     </div>
 

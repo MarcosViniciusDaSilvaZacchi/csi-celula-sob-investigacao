@@ -4,7 +4,6 @@
 const grade = document.getElementById('grade-tabuleiro');
 const colunas = 47; 
 const linhas = 20;
-let jogadorPos = { x: 23, y: 9 }; // O jogador nasce no centro (Laboratório Central)
 
 const salas = {
     "Setor Genético":       { minX: 0,  maxX: 4,  minY: 0,  maxY: 3 },
@@ -20,54 +19,80 @@ const salas = {
 };
 
 // ==========================================
-// 8. BANCO DE CASOS E MISTÉRIOS (TRIOS SECRETOS)
+// 8. BANCO DE CASOS E MISTÉRIOS (COM EXPLICAÇÕES DIDÁTICAS)
 // ==========================================
 const bancoDeCasos = [
-    {
-        id: 1,
-        suspeito: "Oxigênio Explosivo", 
-        local: "Ciclo de Krebs",
-        problema: "Excesso de oxigênio causou estresse oxidativo",
-        pistasNoMapa: {
-            "Setor Genético": "O culpado estava tentando ajudar a célula a produzir energia, mas causou um problema.",
-            "Zona Tóxica": "A falha aconteceu perto de um lugar onde o oxigênio é usado.",
-            "Sala de Arquivos": "O culpado parecia inofensivo, mas bagunçou tudo sem querer."
-        }
+    { 
+        id: 1, suspeito: "Oxigênio Explosivo", local: "Ciclo de Krebs", problema: "Excesso de oxigênio causou estresse oxidativo", 
+        pistasNoMapa: { "Setor Genético": "O culpado estava tentando ajudar a célula a produzir energia, mas causou um problema.", "Zona Tóxica": "A falha aconteceu perto de um lugar onde o oxigênio é usado.", "Sala de Arquivos": "O culpado parecia inofensivo, mas bagunçou tudo sem querer." },
+        explicacaoCientifica: "O oxigênio é vital para a respiração celular. Porém, quando há um desequilíbrio, parte desse oxigênio se transforma em 'Radicais Livres' (moléculas instáveis). Esse fenômeno é o Estresse Oxidativo. Esses radicais atacam e destroem as enzimas que fazem o Ciclo de Krebs girar, paralisando a produção de energia."
     },
-    {
-        id: 2,
-        suspeito: "Mitocôndria Zumbi",
-        local: "Setor Genético",
-        problema: "Mutação destruiu DNA mitocondrial",
-        pistasNoMapa: {
-            "Núcleo": "O culpado tentou corrigir o processo de produção de energia, mas não teve sucesso.",
-            "Zona Oxidativa": "O culpado deixou algo escapar que era essencial.",
-            "Portão Principal": "O culpado consumia nutrientes mas não devolvia energia."
-        }
+    { 
+        id: 2, suspeito: "Mitocôndria Zumbi", local: "Setor Genético", problema: "Mutação destruiu DNA mitocondrial", 
+        pistasNoMapa: { "Núcleo": "O culpado tentou corrigir o processo de produção de energia, mas não teve sucesso.", "Zona Oxidativa": "O culpado deixou algo escapar que era essencial.", "Portão Principal": "O culpado consumia nutrientes mas não devolvia energia." },
+        explicacaoCientifica: "Você sabia que a mitocôndria tem seu próprio DNA (herdado da sua mãe)? Se esse DNA sofre uma mutação genética severa, a mitocôndria perde a capacidade de produzir as peças necessárias para gerar energia. Ela continua viva absorvendo nutrientes, mas vira uma 'zumbi' inútil para o corpo."
     },
-    {
-        id: 3,
-        suspeito: "RNA Mutante", 
-        local: "Cadeia transportadora", 
-        problema: "Produção de proteínas defeituosas",
-        pistasNoMapa: {
-            "Glicólise": "O culpado confundiu os caminhos da célula com informações erradas.",
-            "COA (Garagem)": "A falha aconteceu porque peças erradas foram usadas na fabricação.",
-            "Ciclo de Krebs": "O culpado chegou antes do esperado e atrapalhou tudo."
-        }
+    { 
+        id: 3, suspeito: "RNA Mutante", local: "Cadeia transportadora", problema: "Produção de proteínas defeituosas", 
+        pistasNoMapa: { "Glicólise": "O culpado confundiu os caminhos da célula com informações erradas.", "COA (Garagem)": "A falha aconteceu porque peças erradas foram usadas na fabricação.", "Ciclo de Krebs": "O culpado chegou antes do esperado e atrapalhou tudo." },
+        explicacaoCientifica: "O RNA funciona como um 'mensageiro' que leva a receita do DNA para fabricar proteínas. Se esse mensageiro sofre mutação e carrega a receita errada, a célula fabrica proteínas com o formato torto. Na Cadeia Transportadora, se a proteína não tem o formato perfeito, os elétrons não passam e a energia trava."
+    },
+    { 
+        id: 4, suspeito: "Mito Energético", local: "Ciclo de Krebs", problema: "Falta de insumos para funcionar", 
+        pistasNoMapa: { "Setor de Produção": "O culpado está sobrecarregado de trabalho, mas sem material.", "Reserva de glicose": "Faltou os ingredientes básicos para a missão ser cumprida.", "Portão Principal": "Ele não consegue trabalhar e a energia parou de ser feita." },
+        explicacaoCientifica: "A mitocôndria é uma usina poderosa, mas nenhuma usina funciona sem carvão. Se falta alimentação adequada (glicose) ou oxigênio devido a uma falha na respiração do corpo, falta 'matéria-prima' (insumos). Sem o combustível básico, o Ciclo de Krebs para completamente de girar."
+    },
+    { 
+        id: 5, suspeito: "Enzima Congelada", local: "Descarboxilação do Piruvato", problema: "Falha na formação de acetil-coa", 
+        pistasNoMapa: { "Sala de Arquivos": "Uma peça essencial faltou para o trabalho de conversão.", "Glicólise": "O material principal ficou preso e não conseguiu se transformar.", "Núcleo": "Sem essa transformação, o ciclo inteiro de energia foi paralisado." },
+        explicacaoCientifica: "As enzimas são os operários acelerados do nosso corpo. O Piruvato (gerado pela quebra do açúcar) precisa de uma enzima específica para se transformar em Acetil-CoA e ganhar permissão para entrar na mitocôndria. Se essa enzima 'congela' ou falha, o alimento fica barrado na porta de entrada da usina."
+    },
+    { 
+        id: 6, suspeito: "Radical Raivoso", local: "Zona Tóxica", problema: "Danos às membranas mitocondriais", 
+        pistasNoMapa: { "Setor de Produção": "O culpado invadiu a área mais perigosa e causou destruição.", "COA (Garagem)": "Houve quebra agressiva de partes importantes da fábrica.", "Zona Oxidativa": "Toda a fábrica de energia foi paralisada pelos estragos nas paredes." },
+        explicacaoCientifica: "A mitocôndria possui uma membrana dupla vital para segurar as cargas elétricas da energia. Radicais livres descontrolados são extremamente reativos e atacam a gordura (lipídios) dessa membrana, um processo chamado peroxidação lipídica. Isso fura a parede da usina, vazando toda a energia."
+    },
+    { 
+        id: 7, suspeito: "Organoide Clonado", local: "Produção de Acetil-CoA", problema: "Desvio do processo por estrutura falsa", 
+        pistasNoMapa: { "Setor Genético": "Uma cópia imperfeita confundiu todo o processo logístico.", "Ciclo de Krebs": "Os componentes entregaram os materiais no lugar errado.", "Sala de Arquivos": "A linha de produção parou por causa de um grande impostor." },
+        explicacaoCientifica: "Imagine uma estrutura celular com defeito que imita as originais. Esse organoide age como um impostor que 'rouba' o Piruvato da célula para si, mas por ser falho, não consegue finalizar a conversão química. Ele gasta os nutrientes do corpo e devolve apenas lixo metabólico."
+    },
+    { 
+        id: 8, suspeito: "Mitocôndria Zumbi", local: "Cadeia transportadora", problema: "Consome oxigênio sem gerar ATP", 
+        pistasNoMapa: { "Zona Oxidativa": "Parece estar viva e trabalhando, mas é só uma ilusão.", "Núcleo": "Consome todos os recursos da célula, mas não devolve nada.", "Portão Principal": "Tornou-se um peso morto gigante que apenas drena a fábrica." },
+        explicacaoCientifica: "Existe um defeito chamado 'Desacoplamento Mitocondrial'. Nele, a cadeia transportadora funciona normalmente puxando o oxigênio e queimando calorias, mas a máquina de fazer energia (ATP Sintase) está quebrada. O corpo respira ofegante, gera muito calor, mas a célula continua sem a moeda de energia (ATP)."
+    },
+    { 
+        id: 9, suspeito: "ATP Mutante", local: "Fosforilação Oxidativa", problema: "ATP defeituoso inutilizável", 
+        pistasNoMapa: { "Glicólise": "A energia fabricada tem a forma certa, mas é totalmente inútil.", "Zona Tóxica": "Tentar usar essa energia é como plugar um equipamento em uma bateria vazia.", "COA (Garagem)": "O produto final saiu com defeito terrível de fabricação." },
+        explicacaoCientifica: "O ATP (Adenosina Trifosfato) é a verdadeira 'bateria' da célula. Se ocorre uma falha na etapa final (Fosforilação Oxidativa) e essa molécula é montada com defeito, ela perde a capacidade de estocar energia nas suas ligações químicas. O corpo tenta usar essa bateria para se mover, mas ela está viciada."
+    },
+    { 
+        id: 10, suspeito: "RNA Mutante", local: "Setor Genético", problema: "Proteínas mitocondriais defeituosas", 
+        pistasNoMapa: { "Setor de Produção": "Houve uma falha grave na leitura dos moldes de montagem.", "Sala de Arquivos": "As peças da máquina estão sendo construídas com o formato torto.", "Ciclo de Krebs": "O funcionamento foi corrompido desde a raiz das instruções do projeto." },
+        explicacaoCientifica: "Mutações no código genético levam à transcrição de RNA falhos. Com a instrução errada, o ribossomo fabrica proteínas com falhas estruturais brutais. Como a membrana da mitocôndria é recheada dessas proteínas que agem como 'catracas', a estrutura desmorona de dentro para fora."
+    },
+    { 
+        id: 11, suspeito: "Radical Livre Solto", local: "Zona Tóxica", problema: "Acúmulo de radicais danificou as enzimas", 
+        pistasNoMapa: { "Glicólise": "O culpado saiu do controle e começou a corroer a fábrica como ácido.", "Núcleo": "Partes importantes do processo foram quebradas em pedaços irreversíveis.", "Portão Principal": "O ambiente ficou totalmente impossível para quem tentava trabalhar." },
+        explicacaoCientifica: "As enzimas precisam de um formato 3D perfeito (como uma chave fechadura) para funcionar. Radicais livres altamente tóxicos não neutralizados pelos antioxidantes alteram a forma física dessas proteínas. Uma vez deformada, a enzima nunca mais se encaixa no seu substrato, causando pane geral no metabolismo."
+    },
+    { 
+        id: 12, suspeito: "Célula Organizada", local: "Reserva de glicose", problema: "Incapacidade de mobilizar energia", 
+        pistasNoMapa: { "Setor Genético": "Tão desorientada que perdeu a chave da própria despensa.", "Zona Oxidativa": "O estoque de comida está cheio, mas ficou trancado justo na hora da fome.", "COA (Garagem)": "Incapaz de acessar e usar os próprios nutrientes que guardou para si." },
+        explicacaoCientifica: "O nosso corpo guarda o excesso de açúcar na forma de 'Glicogênio' no fígado e músculos. Se a célula não produz as enzimas que quebram esse estoque de volta para glicose (glicogenólise), ela não consegue acessar sua própria reserva. É como morrer de fome com a geladeira cheia e trancada."
     }
 ];
 
 let casoAtual = null; 
-let pistasEncontradasNaPartida = []; // Memória do detetive
+let salaAtual = null; 
+let jogadorPos = { x: 23, y: 9 };
+let partidaAtual = 0; 
+let historicoVencedores = [null, null, null]; 
+let casosResolvidosGlobais = []; // NOVO: Guarda os casos já fechados
 
 // ==========================================
-// VARIÁVEIS DE CONTROLE DE INVESTIGAÇÃO
-// ==========================================
-let salaAtual = null; // Guarda a sala onde o jogador está pisando neste exato momento
-
-// ==========================================
-// 2. GERENCIAMENTO DE TELAS (MENU / SETUP / TABULEIRO)
+// 2. GERENCIAMENTO DE TELAS (MENU / SETUP)
 // ==========================================
 const btnJogar = document.getElementById('btn-jogar');
 const telaMenu = document.getElementById('tela-menu');
@@ -96,8 +121,6 @@ document.addEventListener('keydown', function(event) {
                 menuInGame.style.display = 'flex';
                 modalGlossario.style.display = 'none';
                 modalSuspeitos.style.display = 'none';
-                
-                // Atualiza o quadro visual de pistas
                 atualizarQuadroDePistas();
             }
         }
@@ -126,7 +149,6 @@ botoesFecharSubmodal.forEach(botao => {
     botao.addEventListener('click', (e) => {
         const targetId = e.target.getAttribute('data-target');
         document.getElementById(targetId).style.display = 'none';
-        
         if (telaTabuleiro.classList.contains('ativa')) {
             menuInGame.style.display = 'flex'; 
         }
@@ -134,11 +156,134 @@ botoesFecharSubmodal.forEach(botao => {
 });
 
 // ==========================================
+// INÍCIO DA PARTIDA MD3 E TURNOS
+// ==========================================
+let jogadores = [];
+let turnoAtual = 0;
+
+function proximoPassoSetup() {
+    document.getElementById('setup-passo-1').style.display = 'none';
+    document.getElementById('setup-passo-2').style.display = 'block';
+    const container = document.getElementById('campos-nomes');
+    container.innerHTML = `
+        <input type="text" id="nome-p1" class="input-nome" placeholder="Nome do Detetive Verde">
+        <input type="text" id="nome-p2" class="input-nome" placeholder="Nome do Detetive Azul">
+    `;
+}
+
+function iniciarPartidaComp() {
+    const p1 = document.getElementById('nome-p1').value || 'Detetive Verde';
+    const p2 = document.getElementById('nome-p2').value || 'Detetive Azul';
+    
+    jogadores = [
+        { id: 0, nome: p1, pos: { x: 23, y: 9 }, cor: '#4CAF50', pistasEncontradas: [], checklist: {} },
+        { id: 1, nome: p2, pos: { x: 23, y: 9 }, cor: '#2196F3', pistasEncontradas: [], checklist: {} }
+    ];
+
+    document.getElementById('tela-setup').style.display = 'none';
+    document.getElementById('tela-tabuleiro').classList.add('ativa');
+    document.getElementById('dado-flutuante').style.display = 'block'; 
+    
+    partidaAtual = 0;
+    historicoVencedores = [null, null, null];
+    atualizarPlacarMD3();
+
+    const indexSorteado = Math.floor(Math.random() * bancoDeCasos.length);
+    casoAtual = bancoDeCasos[indexSorteado];
+    console.log("🕵️‍♂️ MISTÉRIO ROUND 1:", casoAtual);
+    
+    turnoAtual = 0; // Verde começa
+    atualizarTurno();
+    criarGrade();
+}
+
+// Única função atualizarTurno correta e centralizada
+function atualizarTurno() {
+    if(jogadores.length === 0) return;
+    const jogadorAtual = jogadores[turnoAtual];
+    jogadorPos = jogadorAtual.pos; 
+    
+    const divNome = document.getElementById('nome-jogador-atual');
+    if(divNome) {
+        divNome.innerText = `Vez de: ${jogadorAtual.nome}`;
+        divNome.style.color = jogadorAtual.cor;
+    }
+    
+    // Reseta botões do dado para novo turno
+    document.getElementById('dado-resultado').innerText = '-';
+    document.getElementById('btn-rolar-dado').style.display = 'block';
+    document.getElementById('btn-passar-turno').style.display = 'none';
+
+    atualizarVisualChecklist();
+    atualizarQuadroDePistas();
+}
+
+function passarTurno() {
+    turnoAtual = (turnoAtual + 1) % jogadores.length;
+    salaAtual = null; 
+    atualizarTurno();
+    criarGrade(); 
+}
+
+function atualizarPlacarMD3() {
+    for (let i = 0; i < 3; i++) {
+        const dot = document.getElementById(`md3-${i+1}`);
+        if (dot) {
+            if (historicoVencedores[i] === 0) dot.style.backgroundColor = '#4CAF50'; 
+            else if (historicoVencedores[i] === 1) dot.style.backgroundColor = '#2196F3'; 
+            else dot.style.backgroundColor = 'white';
+        }
+    }
+}
+
+// ==========================================
+// TRANSIÇÃO DE ROUND MD3 E SALVAMENTO DE CASO
+// ==========================================
+function iniciarProximoRound(vencedorId) {
+    // 1. Salva o caso resolvido no nosso novo Menu!
+    casosResolvidosGlobais.push({
+        caso: casoAtual,
+        vencedor: jogadores[vencedorId].nome
+    });
+    atualizarListaCasosResolvidos(); // Atualiza o HTML do submenu
+
+    historicoVencedores[partidaAtual] = vencedorId;
+    atualizarPlacarMD3();
+    
+    const vitorias = historicoVencedores.filter(id => id === vencedorId).length;
+    if (vitorias >= 2) {
+        alert(`🎉 FIM DE JOGO! 🎉\nO detetive ${jogadores[vencedorId].nome} venceu a Melhor de 3!`);
+        location.reload(); 
+        return;
+    }
+
+    partidaAtual++;
+    alert(`🏆 CASO RESOLVIDO! 🏆\nO culpado era ${casoAtual.suspeito} no ${casoAtual.local}.\nAbra a aba "Casos Resolvidos" no Menu (M) para ler o Relatório Científico!\n\nPonto para o ${jogadores[vencedorId].nome}!\n\nPreparando o Round ${partidaAtual + 1}...`);
+    
+    jogadores.forEach(j => {
+        j.pos = { x: 23, y: 9 };
+        j.pistasEncontradas = [];
+        j.checklist = {}; 
+    });
+    
+    const indexSorteado = Math.floor(Math.random() * bancoDeCasos.length);
+    casoAtual = bancoDeCasos[indexSorteado];
+    
+    turnoAtual = partidaAtual % 2; 
+    
+    document.getElementById('modal-investigacao').style.display = 'none';
+    document.getElementById('modal-suspeitos').style.display = 'none';
+    document.getElementById('menu-in-game').style.display = 'none';
+
+    atualizarTurno();
+    criarGrade();
+}
+
+// ==========================================
 // 3. LÓGICA DO TABULEIRO (MOVIMENTO E SALAS)
 // ==========================================
 function criarGrade() {
     grade.innerHTML = ''; 
-    
     for (let y = 0; y < linhas; y++) {
         for (let x = 0; x < colunas; x++) {
             const celula = document.createElement('div');
@@ -147,14 +292,24 @@ function criarGrade() {
             celula.dataset.y = y;
             
             for (const [nomeDaSala, limites] of Object.entries(salas)) {
-                if (x >= limites.minX && x <= limites.maxX &&
-                    y >= limites.minY && y <= limites.maxY) {
+                if (x >= limites.minX && x <= limites.maxX && y >= limites.minY && y <= limites.maxY) {
                     celula.classList.add('area-sala');
                 }
             }
             
-            if (x === jogadorPos.x && y === jogadorPos.y) {
+            let cellHasPlayer = false;
+            let pColor = '';
+            jogadores.forEach(jog => {
+                if (x === jog.pos.x && y === jog.pos.y) {
+                    cellHasPlayer = true;
+                    if(jog.id === turnoAtual || pColor === '') pColor = jog.cor;
+                }
+            });
+
+            if (cellHasPlayer) {
                 celula.classList.add('jogador');
+                celula.style.setProperty('background-color', pColor, 'important');
+                celula.style.setProperty('box-shadow', `0 0 10px ${pColor}`, 'important');
             }
 
             celula.addEventListener('click', () => moverJogador(x, y));
@@ -167,11 +322,15 @@ function moverJogador(novoX, novoY) {
     if (passosDisponiveis === 0) return; 
 
     const dist = Math.abs(novoX - jogadorPos.x) + Math.abs(novoY - jogadorPos.y);
-    
     if (dist > 0 && dist <= passosDisponiveis) {
-        jogadorPos = { x: novoX, y: novoY };
+        jogadores[turnoAtual].pos = { x: novoX, y: novoY };
+        jogadorPos = jogadores[turnoAtual].pos;
+        
         passosDisponiveis = 0; 
-        document.getElementById('dado-resultado').innerText = '-';
+        
+        // Esconde rolar e mostra encerrar
+        document.getElementById('btn-rolar-dado').style.display = 'none';
+        document.getElementById('btn-passar-turno').style.display = 'block';
 
         criarGrade(); 
         verificarSala(novoX, novoY);
@@ -180,25 +339,17 @@ function moverJogador(novoX, novoY) {
 
 function verificarSala(x, y) {
     let pisouEmAlgumaSala = false;
-
     for (const [nomeDaSala, limites] of Object.entries(salas)) {
-        if (x >= limites.minX && x <= limites.maxX &&
-            y >= limites.minY && y <= limites.maxY) {
-            
+        if (x >= limites.minX && x <= limites.maxX && y >= limites.minY && y <= limites.maxY) {
             pisouEmAlgumaSala = true;
-
             if (salaAtual !== nomeDaSala) {
                 salaAtual = nomeDaSala; 
-                abrirModalInvestigacao(nomeDaSala);
+                abrirModalInvestigacao(nomeDaSala); 
             }
-            
-            return; 
+            return true; 
         }
     }
-
-    if (!pisouEmAlgumaSala) {
-        salaAtual = null; 
-    }
+    if (!pisouEmAlgumaSala) { salaAtual = null; return false; }
 }
 
 function abrirModalInvestigacao(nomeDaSala) {
@@ -210,18 +361,14 @@ function abrirModalInvestigacao(nomeDaSala) {
     } else if (casoAtual && casoAtual.pistasNoMapa[nomeDaSala]) {
         const textoDaPista = casoAtual.pistasNoMapa[nomeDaSala]; 
         
-        if (!pistasEncontradasNaPartida.includes(`(${nomeDaSala}) ${textoDaPista}`)) {
-            pistasEncontradasNaPartida.push(`(${nomeDaSala}) ${textoDaPista}`);
+        if (!jogadores[turnoAtual].pistasEncontradas.includes(`(${nomeDaSala}) ${textoDaPista}`)) {
+            jogadores[turnoAtual].pistasEncontradas.push(`(${nomeDaSala}) ${textoDaPista}`);
         }
 
         conteudoSala = `
             <div style="border: 2px dashed #8b0000; padding: 15px; background-color: rgba(255,255,255,0.3);">
-                <p style="color: #8b0000; font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">
-                    📜 VOCÊ ENCONTROU UMA PISTA!
-                </p>
-                <p style="font-size: 1.1em; font-style: italic;">
-                    "${textoDaPista}"
-                </p>
+                <p style="color: #8b0000; font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">📜 VOCÊ ENCONTROU UMA PISTA!</p>
+                <p style="font-size: 1.1em; font-style: italic;">"${textoDaPista}"</p>
             </div>
         `;
     } else {
@@ -242,142 +389,171 @@ function abrirModalInvestigacao(nomeDaSala) {
     btnFechar.onmouseover = () => { btnFechar.style.backgroundColor = '#333'; btnFechar.style.color = '#d8c3a5'; };
     btnFechar.onmouseout = () => { btnFechar.style.backgroundColor = 'transparent'; btnFechar.style.color = '#333'; };
     
-    btnFechar.addEventListener('click', () => { modal.style.display = 'none'; });
+    // Agora o modal SÓ fecha, não passa turno!
+    btnFechar.addEventListener('click', () => { 
+        modal.style.display = 'none'; 
+    });
 }
 
 // ==========================================
-// 5. BANCO DE DADOS DO GLOSSÁRIO
+// 5. BANCO DE DADOS DO GLOSSÁRIO (SUBMENUS)
 // ==========================================
 const bancoDeArquivos = {
     suspeitos: [
-        { id: 'S-atpMutante', nome: 'ATP Mutante' },
-        { id: 'S-celulaOrganizada', nome: 'Célula Organizada' },
-        { id: 'S-enzimaCatalizadora', nome: 'Enzima Catalizadora' },
-        { id: 'S-mitocondriaZumbi', nome: 'Mitocôndria Zumbi' },
-        { id: 'S-mitoEnergetico', nome: 'Mito Energético' },
-        { id: 'S-organoideClonado', nome: 'Organoide Clonado' },
-        { id: 'S-oxigenioExplosivo', nome: 'Oxigênio Explosivo' },
-        { id: 'S-radicalLivreSolto', nome: 'Radical Livre Solto' },
-        { id: 'S-radicalRaivoso', nome: 'Radical Raivoso' },
-        { id: 'S-rnaMutante', nome: 'RNA Mutante' }
+        { id: 'S-atpMutante', nome: 'ATP Mutante' }, { id: 'S-celulaOrganizada', nome: 'Célula Organizada' },
+        { id: 'S-enzimaCatalizadora', nome: 'Enzima Catalizadora' }, { id: 'S-mitocondriaZumbi', nome: 'Mitocôndria Zumbi' },
+        { id: 'S-mitoEnergetico', nome: 'Mito Energético' }, { id: 'S-organoideClonado', nome: 'Organoide Clonado' },
+        { id: 'S-oxigenioExplosivo', nome: 'Oxigênio Explosivo' }, { id: 'S-radicalLivreSolto', nome: 'Radical Livre Solto' },
+        { id: 'S-radicalRaivoso', nome: 'Radical Raivoso' }, { id: 'S-rnaMutante', nome: 'RNA Mutante' }
     ],
     locais: [
-        { id: 'L-cadeiaTransportadoraDeEletrons', nome: 'Cadeia de Elétrons' },
-        { id: 'L-cicloDeKrebs', nome: 'Ciclo de Krebs' },
-        { id: 'L-descarboxilacaoDoPiruvato', nome: 'Descarboxilação do Piruvato' },
-        { id: 'L-fosforilacaoOxidativa', nome: 'Fosforilação Oxidativa' },
-        { id: 'L-glicolise', nome: 'Glicólise' },
-        { id: 'L-laboratorioCentral', nome: 'Laboratório Central' },
-        { id: 'L-producaoDeAcetil-coa', nome: 'Produção de Acetil-CoA' },
-        { id: 'L-reservaDeGlicose', nome: 'Reserva de Glicose' },
-        { id: 'L-setorGenetico', nome: 'Setor Genético' },
-        { id: 'L-zonaToxica', nome: 'Zona Tóxica' }
+        { id: 'L-cadeiaTransportadoraDeEletrons', nome: 'Cadeia de Elétrons' }, { id: 'L-cicloDeKrebs', nome: 'Ciclo de Krebs' },
+        { id: 'L-descarboxilacaoDoPiruvato', nome: 'Descarboxilação do Piruvato' }, { id: 'L-fosforilacaoOxidativa', nome: 'Fosforilação Oxidativa' },
+        { id: 'L-glicolise', nome: 'Glicólise' }, { id: 'L-laboratorioCentral', nome: 'Laboratório Central' },
+        { id: 'L-producaoDeAcetil-coa', nome: 'Produção de Acetil-CoA' }, { id: 'L-reservaDeGlicose', nome: 'Reserva de Glicose' },
+        { id: 'L-setorGenetico', nome: 'Setor Genético' }, { id: 'L-zonaToxica', nome: 'Zona Tóxica' }
     ]
 };
+
+// Funções de Navegação do Glossário
+function abrirSubmenuGlossario(menu) {
+    document.getElementById('glossario-menu-principal').style.display = 'none';
+    document.getElementById('glossario-submenu-suspeitos').style.display = 'none';
+    document.getElementById('glossario-submenu-locais').style.display = 'none';
+    document.getElementById('glossario-submenu-casos').style.display = 'none';
+    document.getElementById(`glossario-submenu-${menu}`).style.display = 'block';
+}
+
+function voltarMenuGlossario() {
+    document.getElementById('glossario-submenu-suspeitos').style.display = 'none';
+    document.getElementById('glossario-submenu-locais').style.display = 'none';
+    document.getElementById('glossario-submenu-casos').style.display = 'none';
+    document.getElementById('glossario-menu-principal').style.display = 'block';
+
+    // Reseta a visão da direita para vazio
+    document.getElementById('detalhe-imagem-container').style.display = 'none';
+    document.getElementById('detalhe-texto-container').style.display = 'none';
+    document.getElementById('detalhe-titulo').style.display = 'none';
+    document.getElementById('detalhe-descricao').style.display = 'block';
+}
 
 function inicializarGlossario() {
     const listaSuspeitos = document.getElementById('lista-suspeitos');
     const listaLocais = document.getElementById('lista-locais');
 
     bancoDeArquivos.suspeitos.forEach(item => {
-        let li = document.createElement('li');
-        li.innerText = item.nome;
+        let li = document.createElement('li'); li.innerText = item.nome;
         li.onclick = () => carregarArquivo(item.id, item.nome, 'Perfil do Suspeito');
         listaSuspeitos.appendChild(li);
     });
-
     bancoDeArquivos.locais.forEach(item => {
-        let li = document.createElement('li');
-        li.innerText = item.nome;
+        let li = document.createElement('li'); li.innerText = item.nome;
         li.onclick = () => carregarArquivo(item.id, item.nome, 'Relatório do Local');
         listaLocais.appendChild(li);
     });
 }
 
 function carregarArquivo(id, nome, tipo) {
-    document.getElementById('detalhe-titulo').style.display = 'none';
-    
+    document.getElementById('detalhe-titulo').style.display = 'block';
+    document.getElementById('detalhe-titulo').innerText = nome;
+    document.getElementById('detalhe-titulo').style.color = '#333';
+    document.getElementById('detalhe-titulo').style.borderBottom = 'none';
+
+    document.getElementById('detalhe-texto-container').style.display = 'none'; // Esconde textos
+    document.getElementById('detalhe-descricao').style.display = 'none';
+
     const imgEl = document.getElementById('detalhe-imagem');
     imgEl.src = `assets/img/${id}.png`; 
     imgEl.style.display = 'block';
+    document.getElementById('detalhe-imagem-container').style.display = 'flex';
+}
 
+// NOVO: Gerencia a lista e exibição de Casos Resolvidos
+function atualizarListaCasosResolvidos() {
+    const ul = document.getElementById('lista-casos-resolvidos');
+    if(casosResolvidosGlobais.length === 0) {
+        ul.innerHTML = '<li class="pista-vazia">Nenhum caso resolvido ainda.</li>';
+        return;
+    }
+
+    ul.innerHTML = '';
+    casosResolvidosGlobais.forEach((item, index) => {
+        let li = document.createElement('li');
+        // Exemplo: Caso 1: Oxigênio Explosivo
+        li.innerText = `Caso ${index + 1}: ${item.caso.suspeito}`;
+        li.onclick = () => carregarCasoResolvido(index);
+        ul.appendChild(li);
+    });
+}
+
+function carregarCasoResolvido(index) {
+    const casoData = casosResolvidosGlobais[index];
+    const caso = casoData.caso;
+
+    // Título Bonito
+    const titulo = document.getElementById('detalhe-titulo');
+    titulo.style.display = 'block';
+    titulo.innerText = `Dossiê: Caso ${index + 1}`;
+    titulo.style.color = '#8b0000';
+    titulo.style.borderBottom = '2px dashed #333';
+    titulo.style.paddingBottom = '10px';
+
+    // Esconde as imagens
+    document.getElementById('detalhe-imagem-container').style.display = 'none';
     document.getElementById('detalhe-descricao').style.display = 'none';
+
+    // Mostra e preenche o texto
+    const textoContainer = document.getElementById('detalhe-texto-container');
+    textoContainer.style.display = 'block';
+
+    textoContainer.innerHTML = `
+        <p style="margin-bottom: 5px;"><strong>👨‍🔬 Detetive:</strong> ${casoData.vencedor}</p>
+        <p style="margin-bottom: 5px; color: #8b0000;"><strong>🕵️‍♂️ Culpado:</strong> ${caso.suspeito}</p>
+        <p style="margin-bottom: 5px;"><strong>📍 Local:</strong> ${caso.local}</p>
+        <p style="margin-bottom: 15px;"><strong>⚠️ Problema:</strong> ${caso.problema}</p>
+        
+        <div style="background-color: rgba(255,255,255,0.4); padding: 15px; border: 2px dashed #333; border-radius: 5px; margin-top: 20px;">
+            <h3 style="color: #00008b; margin-top: 0; text-transform: uppercase;">🔬 Relatório Científico Oficial</h3>
+            <p style="text-align: justify; font-style: italic;">${caso.explicacaoCientifica}</p>
+        </div>
+    `;
 }
 
 const hitboxGlossarioMenu = document.querySelector('.hitbox-glossario');
 if (hitboxGlossarioMenu) {
-    hitboxGlossarioMenu.addEventListener('click', () => {
-        document.getElementById('modal-glossario').style.display = 'flex';
+    hitboxGlossarioMenu.addEventListener('click', () => { 
+        document.getElementById('modal-glossario').style.display = 'flex'; 
+        voltarMenuGlossario(); // Garante que abra sempre no menu principal
     });
 }
-
 inicializarGlossario();
 
 // ==========================================
-// 6. SISTEMA DE BLOCO DE ANOTAÇÕES (CHECKLIST)
+// 6. SISTEMA DE BLOCO DE ANOTAÇÕES MÚLTIPLO
 // ==========================================
 const dadosBloco = [
-    {
-        titulo: "SUSPEITOS",
-        itens: [
-            "Célula Organizada", "Enzima Congelada", "Oxigênio Explosivo", 
-            "ATP Mutante", "Mitocôndria Zumbi", "Mito Energético", 
-            "Radical Raivoso", "Organoide Clonado", "Radical Livre Solto", "RNA Mutante"
-        ]
-    },
-    {
-        titulo: "LOCAIS",
-        itens: [
-            "Reserva de glicose", "Glicólise", "Descarboxilação do Piruvato", 
-            "Produção de Acetil-CoA", "Ciclo de Krebs", "Cadeia transportadora", 
-            "Fosforilação Oxidativa", "Zona Tóxica", "Setor Genético", "Laboratório Central"
-        ]
-    },
-    {
-        titulo: "PROBLEMAS",
-        itens: [
-            "Consome oxigênio sem gerar ATP", "Acúmulo de radicais danificou as enzimas", 
-            "ATP defeituoso inutilizável", "Falha na formação de acetil-coa", 
-            "Incapacidade de mobilizar energia", "Falta de insumos para funcionar", 
-            "Mutação destruiu DNA mitocondrial", "Produção de proteínas defeituosas", 
-            "Excesso de oxigênio causou estresse oxidativo", "Desvio do processo por estrutura falsa", 
-            "Danos às membranas mitocondriais", "Proteínas mitocondriais defeituosas"
-        ]
-    }
+    { titulo: "SUSPEITOS", itens: [ "Célula Organizada", "Enzima Congelada", "Oxigênio Explosivo", "ATP Mutante", "Mitocôndria Zumbi", "Mito Energético", "Radical Raivoso", "Organoide Clonado", "Radical Livre Solto", "RNA Mutante" ] },
+    { titulo: "LOCAIS", itens: [ "Reserva de glicose", "Glicólise", "Descarboxilação do Piruvato", "Produção de Acetil-CoA", "Ciclo de Krebs", "Cadeia transportadora", "Fosforilação Oxidativa", "Zona Tóxica", "Setor Genético", "Laboratório Central" ] },
+    { titulo: "PROBLEMAS", itens: [ "Consome oxigênio sem gerar ATP", "Acúmulo de radicais danificou as enzimas", "ATP defeituoso inutilizável", "Falha na formação de acetil-coa", "Incapacidade de mobilizar energia", "Falta de insumos para funcionar", "Mutação destruiu DNA mitocondrial", "Produção de proteínas defeituosas", "Excesso de oxigênio causou estresse oxidativo", "Desvio do processo por estrutura falsa", "Danos às membranas mitocondriais", "Proteínas mitocondriais defeituosas" ] }
 ];
 
 function montarBlocoAnotacoes() {
     const conteinerBloco = document.getElementById('bloco-conteudo');
-    
     dadosBloco.forEach(secao => {
-        const divSecao = document.createElement('div');
-        divSecao.classList.add('secao-bloco');
-
-        const tituloSecao = document.createElement('div');
-        tituloSecao.classList.add('secao-titulo');
-        tituloSecao.innerText = secao.titulo;
-
-        const divLista = document.createElement('div');
-        divLista.classList.add('secao-lista');
+        const divSecao = document.createElement('div'); divSecao.classList.add('secao-bloco');
+        const tituloSecao = document.createElement('div'); tituloSecao.classList.add('secao-titulo'); tituloSecao.innerText = secao.titulo;
+        const divLista = document.createElement('div'); divLista.classList.add('secao-lista');
 
         secao.itens.forEach(texto => {
-            const linha = document.createElement('div');
-            linha.classList.add('linha-item');
+            const linha = document.createElement('div'); linha.classList.add('linha-item');
+            const spanTexto = document.createElement('span'); spanTexto.innerText = texto;
+            const bolinhas = document.createElement('div'); bolinhas.classList.add('container-bolinhas');
             
-            const spanTexto = document.createElement('span');
-            spanTexto.innerText = texto;
-
-            const bolinhas = document.createElement('div');
-            bolinhas.classList.add('container-bolinhas');
-            
-            const bolinha = document.createElement('div');
-            bolinha.classList.add('bolinha-status', 'vazio'); 
-            bolinha.dataset.estado = '0'; 
+            const bolinha = document.createElement('div'); bolinha.classList.add('bolinha-status', 'vazio'); bolinha.dataset.estado = '0'; 
 
             bolinha.addEventListener('click', function() {
                 let proximoEstado = (parseInt(this.dataset.estado) + 1) % 4;
                 this.dataset.estado = proximoEstado;
-
                 this.classList.remove('vazio', 'certo', 'errado', 'duvida');
 
                 if (proximoEstado === 0) this.classList.add('vazio');
@@ -385,86 +561,36 @@ function montarBlocoAnotacoes() {
                 else if (proximoEstado === 2) this.classList.add('errado');
                 else if (proximoEstado === 3) this.classList.add('duvida');
 
+                jogadores[turnoAtual].checklist[texto] = proximoEstado;
+
                 if (proximoEstado === 1 && casoAtual) {
                     setTimeout(() => { verificarVitoriaInstantanea(); }, 100);
                 }
             });
 
-            bolinhas.appendChild(bolinha);
-            linha.appendChild(spanTexto);
-            linha.appendChild(bolinhas);
-            
-            divLista.appendChild(linha);
+            bolinhas.appendChild(bolinha); linha.appendChild(spanTexto); linha.appendChild(bolinhas); divLista.appendChild(linha);
         });
-
-        divSecao.appendChild(tituloSecao);
-        divSecao.appendChild(divLista);
-        conteinerBloco.appendChild(divSecao);
+        divSecao.appendChild(tituloSecao); divSecao.appendChild(divLista); conteinerBloco.appendChild(divSecao);
     });
 }
-
 montarBlocoAnotacoes();
 
-// ==========================================
-// INÍCIO DA PARTIDA E JOGADORES
-// ==========================================
-let jogadores = [];
-let turnoAtual = 0;
-
-function proximoPassoSetup(passo) {
-    document.getElementById('setup-passo-1').style.display = 'none';
-    document.getElementById('setup-passo-2').style.display = 'block';
-}
-
-function configurarJogadores(qtd) {
-    const container = document.getElementById('campos-nomes');
-    container.innerHTML = '';
-    jogadores = [];
-
-    for (let i = 1; i <= qtd; i++) {
-        container.innerHTML += `
-            <input type="text" id="nome-p${i}" class="input-nome" placeholder="Nome do Detetive ${i}">
-        `;
-    }
-    document.getElementById('btn-iniciar-jogo').style.display = 'inline-block';
-}
-
-function iniciarPartidaComp() {
-    const inputs = document.querySelectorAll('.input-nome');
-    inputs.forEach((input, index) => {
-        jogadores.push({
-            id: index,
-            nome: input.value || `Detetive ${index + 1}`,
-            pos: { x: 23, y: 9 }, 
-            cor: index === 0 ? '#00ff00' : (index === 1 ? '#0000ff' : '#ff0000'),
-            pistasEncontradas: 0
-        });
+function atualizarVisualChecklist() {
+    if (jogadores.length === 0) return;
+    const todasLinhas = document.querySelectorAll('.linha-item');
+    todasLinhas.forEach(linha => {
+        const texto = linha.querySelector('span').innerText;
+        const bolinha = linha.querySelector('.container-bolinhas .bolinha-status');
+        
+        const estadoSalvo = jogadores[turnoAtual].checklist[texto] || 0;
+        
+        bolinha.dataset.estado = estadoSalvo;
+        bolinha.classList.remove('vazio', 'certo', 'errado', 'duvida');
+        if (estadoSalvo === 0) bolinha.classList.add('vazio');
+        else if (estadoSalvo === 1) bolinha.classList.add('certo');
+        else if (estadoSalvo === 2) bolinha.classList.add('errado');
+        else if (estadoSalvo === 3) bolinha.classList.add('duvida');
     });
-
-    document.getElementById('tela-setup').style.display = 'none';
-    document.getElementById('tela-tabuleiro').classList.add('ativa');
-    document.getElementById('dado-flutuante').style.display = 'block'; 
-    
-    // SORTEIA O CASO DA PARTIDA!
-    const indexSorteado = Math.floor(Math.random() * bancoDeCasos.length);
-    casoAtual = bancoDeCasos[indexSorteado];
-    console.log("🕵️‍♂️ MISTÉRIO SORTEADO (Para você testar):", casoAtual);
-    
-    pistasEncontradasNaPartida = []; // Zera o diário de pistas da partida
-    localStorage.setItem('csi_partida_ativa', JSON.stringify(jogadores));
-    
-    criarGrade();
-}
-
-function salvarNoRanking(vencedor, turnos) {
-    let ranking = JSON.parse(localStorage.getItem('csi_ranking')) || [];
-    ranking.push({
-        nome: vencedor,
-        pontuacao: turnos,
-        data: new Date().toLocaleDateString()
-    });
-    ranking.sort((a, b) => a.pontuacao - b.pontuacao);
-    localStorage.setItem('csi_ranking', JSON.stringify(ranking.slice(0, 10))); 
 }
 
 // ==========================================
@@ -478,78 +604,57 @@ document.getElementById('btn-rolar-dado').addEventListener('click', () => {
     const resultado = Math.floor(Math.random() * 12) + 1; 
     document.getElementById('dado-resultado').innerText = resultado;
     passosDisponiveis = resultado;
-
     destacarCasasAlcancaveis();
+});
+
+// AÇÃO DE ENCERRAR O TURNO
+document.getElementById('btn-passar-turno').addEventListener('click', () => {
+    passarTurno();
 });
 
 function destacarCasasAlcancaveis() {
     const celulas = document.querySelectorAll('.celula');
-    
     celulas.forEach(c => {
-        const x = parseInt(c.dataset.x);
-        const y = parseInt(c.dataset.y);
-
+        const x = parseInt(c.dataset.x); const y = parseInt(c.dataset.y);
         const dist = Math.abs(x - jogadorPos.x) + Math.abs(y - jogadorPos.y);
 
         if (dist > 0 && dist <= passosDisponiveis) {
             let ehSala = false;
             for (const [nomeDaSala, limites] of Object.entries(salas)) {
-                if (x >= limites.minX && x <= limites.maxX &&
-                    y >= limites.minY && y <= limites.maxY) {
-                    ehSala = true;
-                    break;
-                }
+                if (x >= limites.minX && x <= limites.maxX && y >= limites.minY && y <= limites.maxY) { ehSala = true; break; }
             }
-
-            if (ehSala) {
-                c.classList.add('alcancavel-sala'); 
-            } else {
-                c.classList.add('alcancavel');      
-            }
+            if (ehSala) c.classList.add('alcancavel-sala'); 
+            else c.classList.add('alcancavel');      
         }
     });
 }
 
 const dadoFlutuante = document.getElementById('dado-flutuante');
 const dadoHeader = document.getElementById('dado-header');
-
-let isDragging = false;
-let dragOffsetX, dragOffsetY;
+let isDragging = false; let dragOffsetX, dragOffsetY;
 
 dadoHeader.addEventListener('mousedown', (e) => {
     isDragging = true;
     dragOffsetX = e.clientX - dadoFlutuante.getBoundingClientRect().left;
     dragOffsetY = e.clientY - dadoFlutuante.getBoundingClientRect().top;
 });
-
 document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
-    
-    dadoFlutuante.style.bottom = 'auto'; 
-    dadoFlutuante.style.right = 'auto';
-    
-    dadoFlutuante.style.left = `${e.clientX - dragOffsetX}px`;
-    dadoFlutuante.style.top = `${e.clientY - dragOffsetY}px`;
+    dadoFlutuante.style.bottom = 'auto'; dadoFlutuante.style.right = 'auto';
+    dadoFlutuante.style.left = `${e.clientX - dragOffsetX}px`; dadoFlutuante.style.top = `${e.clientY - dragOffsetY}px`;
 });
-
-document.addEventListener('mouseup', () => {
-    isDragging = false; 
-});
+document.addEventListener('mouseup', () => { isDragging = false; });
 
 // ==========================================
-// 9. AUDITORIA E PISTAS VISUAIS
+// 9. AUDITORIA DE VITÓRIA E PISTAS VISUAIS
 // ==========================================
 function verificarVitoriaInstantanea() {
-    const todasLinhas = document.querySelectorAll('.linha-item');
     let marcadosCerto = []; 
+    const checklist = jogadores[turnoAtual].checklist;
 
-    todasLinhas.forEach(linha => {
-        const texto = linha.querySelector('span').innerText;
-        const bolinha = linha.querySelector('.container-bolinhas .bolinha-status'); 
-        if (bolinha && bolinha.dataset.estado == '1') { 
-            marcadosCerto.push(texto);
-        }
-    });
+    for (const [texto, estado] of Object.entries(checklist)) {
+        if (estado === 1) { marcadosCerto.push(texto); }
+    }
 
     if (marcadosCerto.length === 3) {
         const acertouSuspeito = marcadosCerto.includes(casoAtual.suspeito);
@@ -557,26 +662,24 @@ function verificarVitoriaInstantanea() {
         const acertouProblema = marcadosCerto.includes(casoAtual.problema);
 
         if (acertouSuspeito && acertouLocal && acertouProblema) {
-            alert(`🏆 CASO RESOLVIDO! 🏆\n\nVocê descobriu a verdade, detetive!\n\nCulpado: ${casoAtual.suspeito}\nLocal: ${casoAtual.local}\nProblema: ${casoAtual.problema}`);
+            iniciarProximoRound(turnoAtual);
         }
     }
 }
 
 function atualizarQuadroDePistas() {
     const lista = document.getElementById('lista-pistas-encontradas');
-    
-    if (!lista) return; 
-
+    if (!lista || jogadores.length === 0) return; 
     lista.innerHTML = ''; 
 
-    if (pistasEncontradasNaPartida.length === 0) {
+    const pistasDoJogador = jogadores[turnoAtual].pistasEncontradas;
+
+    if (pistasDoJogador.length === 0) {
         lista.innerHTML = '<li class="pista-vazia">Nenhuma pista encontrada ainda... Explore as salas!</li>';
         return;
     }
 
-    pistasEncontradasNaPartida.forEach(pista => {
-        const li = document.createElement('li');
-        li.innerText = pista;
-        lista.appendChild(li);
+    pistasDoJogador.forEach(pista => {
+        const li = document.createElement('li'); li.innerText = pista; lista.appendChild(li);
     });
 }

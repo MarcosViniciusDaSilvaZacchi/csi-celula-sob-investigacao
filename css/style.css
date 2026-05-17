@@ -582,3 +582,77 @@ body {
 }
 
 .celula.alcancavel-sala:hover { background-color: rgba(255, 152, 0, 0.8); }
+
+/* ==========================================
+   PLACAR MELHOR DE 3 (MD3)
+   ========================================== */
+.placar-md3-caixa {
+    position: absolute; 
+    top: -65px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex; 
+    gap: 15px; 
+    background: #d8c3a5; 
+    padding: 10px 25px; 
+    border: 3px solid #333; 
+    border-radius: 8px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+    z-index: 10;
+}
+
+.md3-dot {
+    width: 25px;
+    height: 25px;
+    background-color: white; /* Começa branco */
+    border: 3px solid #333;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    transition: background-color 0.3s;
+}
+
+#btn-passar-turno {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent; 
+    color: #8b0000;
+    border: 2px dashed #8b0000; 
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+
+#btn-passar-turno:hover { 
+    background-color: #8b0000; 
+    color: #d8c3a5; 
+    border-style: solid;
+}
+
+/* ==========================================
+   BOTÃO VOLTAR DO GLOSSÁRIO
+   ========================================== */
+.btn-voltar-glossario {
+    background-color: transparent;
+    color: #333;
+    border: 2px dashed #333;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+}
+
+.btn-voltar-glossario:hover {
+    background-color: #333;
+    color: #d8c3a5;
+    border-style: solid;
+}
